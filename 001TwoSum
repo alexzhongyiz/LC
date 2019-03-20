@@ -1,0 +1,17 @@
+hashmap={}
+        for i in range(len(nums)):
+            complement= target-nums[i]
+            #if hashmap.has_key(complement): this is invalid
+            
+            if complement in hashmap:
+                return [hashmap.get(complement),i]
+            hashmap[nums[i]]= i
+            
+ # The following code would not work for [3,3]:
+   def twoSum(self, nums: List[int], target: int) -> List[int]:
+        htable={}
+        for index in range(len(nums)):
+            htable[nums[index]]=index
+        for val in htable:
+            if target-val in htable and htable.get(target-val)!=htable.get(val):
+                return htable[val], htable[target-val] 
