@@ -1,0 +1,46 @@
+   
+      #following is  my code for 3 sum closest to target:
+        class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        nums.sort()
+        N=len(nums)
+        d=target-nums[0]-nums[1]-nums[N-1]
+        for i in range(N-2):
+            s,e=i+1,N-1
+            tar=target-nums[i]
+            diff=nums[s]+nums[e]-tar
+            d_abs=diff
+            while diff!=0 and s<e:   
+                if diff>0:
+                    e=e-1
+                    if s!=e:
+                        diff=nums[s]+nums[e]-tar
+                    
+                else:
+                    s=s+1
+                    if s!=e:
+                        diff=nums[s]+nums[e]-tar
+                        
+                if abs(diff)<=abs(d_abs):
+                        d_abs=diff
+            if(abs(d_abs)<=abs(d)):
+                    d=d_abs
+        return d+target
+        
+#someone's more concise code:        
+            nums.sort()
+    res = sum(nums[:3])
+    for i in xrange(len(nums)):
+        l, r = i+1, len(nums)-1
+        while l < r:
+            s = sum((nums[i], nums[l], nums[r]))
+            if abs(s-target) < abs(res-target):
+                res = s
+            if s < target:
+                l += 1
+            elif s > target:
+                r -= 1
+            else: # break early 
+                return res
+    return res
+            
