@@ -1,0 +1,48 @@
+#this requires return all possible 4 sums up to target, the following is my code involving 1 hashmap storing the 3rd numbe, it uses O(n^3) time
+and O(n) space:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        result=[]
+        #hashtable={}
+        nums.sort()
+        for i in range(len(nums)-3):
+            for j in range(i+1, len(nums)-2):
+                hashtable={}
+                for k in range(j+1, len(nums)):
+                    residue=target-nums[i]-nums[j]-nums[k]
+                    if nums[k] in hashtable:
+                        if len(result)==0 or [nums[i],nums[j],residue,nums[k]] not in result:
+                            result.append([nums[i],nums[j],residue,nums[k]])
+                    hashtable[residue]=k
+        
+        return result
+        
+        #My second attempt is as follows where I use hashmap for 2sums, and compute the remainging two sums, this is O(n^2) on average, but 
+        O(n^4) in worst case; this is inspired by the following code:
+        https://leetcode.com/problems/4sum/discuss/128591/Easy-to-understand-python-Solution
+        
+        class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        result=set()
+        nums.sort()
+        N=len(nums)
+        sum=dict()
+        for a in range(N):
+            for b in range(a+1, N):
+                if nums[a]+nums[b] in sum:
+                    sum[nums[a]+nums[b]].append((a,b))
+                else:
+                    sum[nums[a]+nums[b]]=[(a,b)]
+        #print(sum)
+        for c in range(N):
+            for d in range(c+1,N):
+                key=target-(nums[c]+nums[d])
+                if key in sum:
+                    for (a,b) in sum[key]:
+                        if a==c or a==d or b==c or b==d:
+                            continue
+                        flist=[nums[a],nums[b],nums[c],nums[d]]
+                        flist.sort()
+                        result.add(tuple(flist))
+        return list(result)
+                
+        
