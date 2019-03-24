@@ -1,0 +1,28 @@
+#Why does the following code gives int object not subscriptable on line 11
+
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        if len(height)<=1:
+            return 0
+        v_1=[0,height[0]]
+        v_2=[1,height[1]]
+        current_area=min(height[1], height[0])
+        current_max=[0, height[0]]
+        for i in range(1, len(height)):
+            newarea1 = (i-v_1[0])*min(height[i],v_1[1] )
+            newarea2 = (i-v_2[0])*min(height[i], v_2[1])
+            between_max= (i-current_max[0])*min(current_max[1], height[i])
+            if height[i]> current_max[1]:
+                current_max=[1,height[i]]
+            current_area= max(current_area, newarea1, newarea2, between_max)
+            if current_area==newarea1:
+                v_2=[i, height[i]]
+            elif current_area==newarea2:
+                v_1=v_2, v_2=[i, height[i]]
+            elif current_area==between_max:
+                v_1=current_max, v_2=[i,height[i]]
+        return current_area
+        
+        #The correst idea is to use double pointer, with the smaller of the two moving inside to find max value
+        
+     
