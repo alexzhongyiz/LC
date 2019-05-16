@@ -19,3 +19,23 @@
 # or can shorten the main function by using max:
 for i in range(len(s)):
             res = max(self.helper(s,i,i), self.helper(s,i,i+1), res, key=len)
+
+
+#the fastest seems here, where each time you add one more character to the string, your longest palindrome could at most increase
+#by 1 or 2. 
+
+def longestPalindrome(self, s: str) -> str:
+        if len(s)==0:
+        	return ""
+        maxLen=1
+        start=0
+        for i in range(len(s)):
+        	if i-maxLen >=1 and s[i-maxLen-1:i+1]==s[i-maxLen-1:i+1][::-1]:
+        		start=i-maxLen-1
+        		maxLen+=2
+        		continue
+
+        	if i-maxLen >=0 and s[i-maxLen:i+1]==s[i-maxLen:i+1][::-1]:
+        		start=i-maxLen
+        		maxLen+=1
+        return s[start:start+maxLen]
