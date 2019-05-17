@@ -1,0 +1,28 @@
+class Solution:
+    def minCut(self, s: str) -> int:
+        if not s:
+            return 0
+        dp = [[False]* len(s)  for _ in range(len(s))]
+        for l in range(len(s)):
+            dp[l][l] = True
+            if l < len(s)-1 and s[l] == s[l + 1]:
+                dp[l][l + 1] = True
+        for l in range(len(s) - 1, -1, -1):
+            for r in range(l + 2, len(s)):
+                if l+1 <= r-1 and dp[l+1][r-1] and s[l] == s[r]:
+                    dp[l][r] = True
+             # if left end sweeps from left and so is the right end, this is wrong, bccccb would give false. 
+             #yet if left end sweeps from right to left  and right end sweeps to left to right, then it works. 
+        
+        
+        f = [(len(s) - k - 1)  for k in range(len(s) + 1 )] #the last gives you -1. 
+        
+        for i in range(len(s) - 2, -1, -1):
+            for j in range(i, len(s)):
+                if dp[i][j]:
+                    f[i] = min(f[i], 1 + f [j + 1] )
+        #print(dp)
+        print(f)          
+        return f[0]
+        
+        
