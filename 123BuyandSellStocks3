@@ -18,3 +18,5 @@ class Solution:
             profit=max(profit, left[k]+right[k])   
         return profit
             
+#generalized DP solution with k transactions:
+https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/discuss/135704/Detail-explanation-of-DP-solution
