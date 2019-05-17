@@ -12,9 +12,30 @@ class Solution:
         else: return firstMatch and self.isMatch(s[1:], p[1:])
         
         return firstMatch and self.isMatch(s[1:], p[1:])
+        
+        
+    #the corresponding DP algorithm is as follows:
+        def isMatch(self, s: str, p: str) -> bool:
+        dp = [[False for k in range(len(s) + 1)] for _ in range(len(p) + 1)]
+        #here dp[i][j] means isMatch(s[j:], p[i:])
+        dp[-1][-1] = True
+        for i in range( len(p) - 1, -1, -1):
+            for j in range( len(s), -1, -1):#note that even text is empty can still have true value
+                firstmatch = j < len(s) and p[i] in {'.', s[j]}
+                #if p[i] !="*":
+                   # dp[i][j] = dp[i + 1][j + 1] and firstmatch
+                
+                
+                if i <= len(p) - 2 and p[i + 1] =='*':
+                    dp[i][j] = dp[i + 2][j] or (firstmatch and dp[i][j+1])
+                else:
+                    dp[i][j] = firstmatch and dp[i + 1][j + 1]
+                    
+                    
+        print(dp)            
+        return dp[0][0]       
             
-            
-     # or we can use DP as follows:
+     # or we can use DP starting from the beginning as following link
      #link is https://leetcode.com/problems/regular-expression-matching/discuss/5723/My-DP-approach-in-Python-with-comments-and-unittest
      class Solution(object):
     def isMatch(self, s, p):
