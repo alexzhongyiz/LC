@@ -1,0 +1,22 @@
+ #time exponential: recursive
+ def numTrees(self, n: int) -> int:
+        if n == 0: return 1
+        if n == 1: return 1
+        ans = 0
+        for i in range(n):
+            ans += self.numTrees(i) * self.numTrees(n - 1 - i)
+        return ans
+        
+ #DP as follows:  
+            def numTrees(self, n: int) -> int:
+        if n == 0: return 1
+        if n == 1: return 1
+        dp = [i for i in range(n + 1)]
+        dp[0] = 1
+        for i in range(2, n + 1):
+            temp = 0
+            for j in range(0, i):
+                temp += dp[j] * dp[i - 1 - j]
+            dp[i] = temp
+        print(dp)
+        return dp[n]
