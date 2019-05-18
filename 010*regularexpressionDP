@@ -11,7 +11,7 @@ class Solution:
         
         else: return firstMatch and self.isMatch(s[1:], p[1:])
         
-        return firstMatch and self.isMatch(s[1:], p[1:])
+       
         
         
     #the corresponding DP algorithm is as follows:
