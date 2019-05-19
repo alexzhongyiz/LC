@@ -1,0 +1,63 @@
+    #the following doesn't work because although it satisfies at each node locally, but
+    # we need EVERY node in the right child greater than the value of a parent node, namely globally has to be true also
+    def isValidBST(self, root: TreeNode) -> bool:
+        if not root:
+            return True
+        stack, visited = [], {}
+        while root or stack:
+            if root:
+                visited[root] = 1
+                if root.left and root.left.val >= root.val:
+                    return False
+                if root.right and root.right.val <= root.val:
+                    return False
+                stack.append(root)
+                root = root.left
+            else:
+                node = stack.pop()
+                if node.right not in visited:
+                    root = node.right
+        return True
+   
+   #easy idea:
+   #use in-order traversal and then see if an element is bigger than the next one
+                    
+    def isValidBST(self, root: TreeNode) -> bool:
+       
+        array = self.inorder(root)
+        print(array)
+        for i in range(len(array) - 1):
+            if array[i] >= array[i + 1]:
+                return False
+            
+        return True
+        
+    def inorder(self, root):
+        if not root:
+            return []
+        res = self.inorder(root.left)
+        res.append(root.val)
+        res.extend(self.inorder(root.right))
+        return res
+ #or even smarter for the next one as this updates the lower bound :
+     def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        stack, inorder = [], float('-inf')
+        
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            # If next element in inorder traversal
+            # is smaller than the previous one
+            # that's not BST.
+            if root.val <= inorder:
+                return False
+            inorder = root.val
+            root = root.right
+
+        return True
