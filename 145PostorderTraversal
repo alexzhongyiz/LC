@@ -1,0 +1,20 @@
+#using stack and iteration as required ofc:
+    def postorderTraversal(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        stack, res, tossed = [], [],[]
+        while stack or root:
+            if root:
+                stack.append(root)
+                root = root.left
+            else:
+                node = stack[-1]
+                if not node.right:
+                    res.append(node)
+                    stack.pop()
+                else:
+                    if node.right not in res:
+                        root = node.right
+                    else:
+                        res.append(stack.pop())
+        return [node.val for node in res]
