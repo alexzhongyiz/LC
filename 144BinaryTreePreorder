@@ -1,0 +1,16 @@
+   #using stack and iteration:
+   
+   def preorderTraversal(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        res = []
+        stack = []
+        while stack or root:
+            if root:
+                res.append(root.val)
+                stack.append(root.right)
+                root = root.left
+            else:
+                root = stack.pop()
+        return res
+                
