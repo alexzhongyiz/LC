@@ -1,0 +1,26 @@
+#BFS and recursion(call itself):
+    def isSymmetric(self, root: TreeNode) -> bool:
+        if root == None:
+            return True
+        else: return self.isSymmetric2(root.left, root.right)
+        
+        
+    def isSymmetric2(self, left, right):
+        if left is None and right is None:
+            return True
+        elif left is None or right is None:
+            return False
+        elif left.val != right.val:return False
+        outpair = self.isSymmetric2(left.left, right.right)
+        innerpair = self.isSymmetric2(left.right, right.left)
+        return outpair and innerpair
+        
+      #BFS with iteration using queue from others:
+      
+    def isSymmetric(self, root):
+    queue = [root]
+    while queue:
+        values = [i.val if i else None for i in queue]
+        if values != values[::-1]: return False
+        queue = [child for i in queue if i for child in (i.left, i.right)]
+    return True
