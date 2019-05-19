@@ -1,0 +1,21 @@
+#BFS:
+def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root:
+            return []
+        reg = []
+        level =[root]
+        while level:
+            next_level = []
+            for node in level:
+                if node.left:
+                    next_level.append(node.left)
+                if node.right:
+                    next_level.append(node.right)
+            reg.append([node.val for node in level])
+            level = next_level
+        
+        print(reg)
+        ans = []
+        for i in range(len(reg)):
+            ans.append(reg[i]) if i%2 == 0 else ans.append(reg[i][::-1])
+        return ans
