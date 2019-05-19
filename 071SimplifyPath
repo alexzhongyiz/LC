@@ -1,0 +1,62 @@
+#my original false code that didn't get "/..." correct, where "..." is file name (weird)
+
+def simplifyPath(self, path: str) -> str:
+        stack, flag = [], 0
+        
+        for word in self.getword(path):
+            if word == "/":
+                flag = 1
+            elif word == '..':
+                if stack:
+                    stack.pop()
+            elif word == '.':
+                continue
+            else:
+                stack.append(word)
+                flag = 0
+        print("stack:", stack)
+        ans = "/" + "/".join(stack)
+        return ans
+    
+
+def getword(self,path):
+        res = []
+        word =''
+        for i in range(len(path)):
+            
+            if path[i] == '/':
+                if word:
+                    res.append(word)
+                    word = ''
+                res.append('/')
+            elif path[i] == '.':
+                
+                if i < len(path) - 1 and path[i + 1] == '.':
+                    continue
+                elif path[i - 1] == ".":
+                    res.append('..')
+                else: res.append('.')
+
+            else:
+                word += path[i]
+        if word:
+                res.append(word)
+        return res
+        
+ #it turns out that my main idea was right except that I didn't know this operation:
+ #path.split('/'), which gives a list of strings that are seperated by "/" inverse to "/".join in some sense.
+ 
+ #now the correct code is:
+ def simplifyPath(self, path):
+        places = [p for p in path.split("/") if p!="." and p!=""]
+        stack = []
+        for p in places:
+            if p == "..":
+                if len(stack) > 0:
+                    stack.pop()
+            else:
+                stack.append(p)
+        return "/" + "/".join(stack)
+        
+        
+ 
