@@ -24,3 +24,25 @@
         if values != values[::-1]: return False
         queue = [child for i in queue if i for child in (i.left, i.right)]
     return True
+
+
+#or this iterative methods with queue:
+
+def isSymmetric(self, root):
+    if not root:
+        return True
+
+    dq = collections.deque([(root.left,root.right),])
+    while dq:
+        node1, node2 = dq.popleft()
+        if not node1 and not node2:
+            continue
+        if not node1 or not node2:
+            return False
+        if node1.val != node2.val:
+            return False
+        # node1.left and node2.right are symmetric nodes in structure
+        # node1.right and node2.left are symmetric nodes in structure
+        dq.append((node1.left,node2.right))
+        dq.append((node1.right,node2.left))
+    return True
