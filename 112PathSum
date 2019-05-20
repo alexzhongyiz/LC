@@ -1,0 +1,61 @@
+#recursive as follows: the only reason that I need a helper function is because if the whole tree is empty, then it would return false 
+automatically, regardless of whether sum is zero or not.
+
+    def hasPathSum(self, root: TreeNode, sum: int) -> bool:
+        if not root:
+            return False
+        
+        return self.hasPathSum1(root, sum)
+                
+    def hasPathSum1(self, root, sum):
+        if not root:
+            return sum == 0
+        if root.left and root.right:
+            return self.hasPathSum1(root.left, sum - root.val) or self.hasPathSum1(root.right, sum - root.val)
+        
+        if not root.left:
+            return self.hasPathSum1(root.right, sum - root.val)
+        elif not root.right:
+            return self.hasPathSum1(root.left, sum - root.val)
+        
+        
+        
+ #want iterative and stack:
+class Solution:
+    def hasPathSum(self, root: TreeNode, sum: int) -> bool:
+        if not root:
+            return False
+        
+        return self.hasPathSum1(root, sum)
+                
+    def hasPathSum1(self, root, sum):
+        #if not root:
+            #return sum == 0
+        stack, visited_right, cur = [], {}, 0
+        while root or stack:
+            if root:
+                cur += root.val
+                stack.append((root, cur))
+                root = root.left
+            else:
+                node, cur = stack[-1]
+                if node.right:
+                    if node not in visited_right:
+                        root = node.right
+                        visited_right[node] = True
+                    else:
+                        stack.pop()
+                    
+                else:
+                    if node.left:
+                        stack.pop()
+                    
+                    
+                    else:
+                        node, cur = stack.pop()
+                        if cur == sum:
+                            return True
+                    
+        return False
+                
+                
