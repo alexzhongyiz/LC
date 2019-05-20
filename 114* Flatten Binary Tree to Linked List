@@ -1,0 +1,47 @@
+#I couldn't figure out how to deal with the fact that I needed to link the right end of the left child to link to the right child
+These two answers(essentially the same) gave the idea of using reversed preorder traversal (namely right, left, root) to figure it out
+not self. prev makes prev a global variable that is initialized to be None and keeps on changing. In order to understand what is going on, need to start from the lowest 
+node and going up.
+
+def __init__(self):
+    self.prev = None
+    
+def flatten(self, root):
+    if not root:
+        return None
+    self.flatten(root.right)
+    self.flatten(root.left)
+    
+    root.right = self.prev
+    root.left = None
+    self.prev = root
+    
+#no. 2    
+    class Solution:
+# @param root, a tree node
+# @return nothing, do it in place
+prev = None
+def flatten(self, root):
+    if not root:
+        return
+    self.prev = root
+    self.flatten(root.left)
+
+    temp = root.right
+    root.right, root.left = root.left, None
+    self.prev.right = temp
+
+    self.flatten(temp)
+
+
+
+         *
+       /
+      n
+   /     \
+ left   right
+  \ 
+   *
+    *
+     \
+      p
