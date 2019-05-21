@@ -1,0 +1,57 @@
+    def totalNQueens(self, n: int) -> int:
+        res = []
+        def dfs(queens, xydif, xysum):
+            
+            p = len(queens)
+            if p == n:
+                res.append(queens)
+                return 
+            for q in range(n):
+                if q not in queens and p - q not in xydif and p+q not in xysum:
+                    dfs(queens+ [q], xydif + [p - q], xysum + [p + q])
+        
+        dfs([],[],[])
+        return len(res)
+        
+        I can't make res a number because this runs into local/global variable problems and I can't solve it.
+        This is my solution, make res global for both functions:
+        
+        def totalNQueens(self, n: int) -> int:
+        global res
+        res = 0
+        def dfs(queens, xydif, xysum):
+            global res
+            p = len(queens)
+            if p == n:
+                res += 1
+                return 
+            for q in range(n):
+                if q not in queens and p - q not in xydif and p+q not in xysum:
+                    dfs(queens+ [q], xydif + [p - q], xysum + [p + q])
+        
+        dfs([],[],[])
+        return res
+        
+        
+        
+   #this following DFS looks very neat:
+        
+        def totalNQueens(self, n):
+    self.res = 0
+    self.dfs([-1]*n, 0)
+    return self.res
+    
+def dfs(self, nums, index):
+    if index == len(nums):
+        self.res += 1
+        return 
+    for i in xrange(len(nums)):
+        nums[index] = i
+        if self.valid(nums, index):
+            self.dfs(nums, index+1)
+    
+def valid(self, nums, n):
+    for i in xrange(n):
+        if nums[i] == nums[n] or abs(nums[n]-nums[i]) == n-i:
+            return False
+    return True
