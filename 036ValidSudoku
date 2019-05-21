@@ -1,0 +1,40 @@
+ #just do it by brute force:
+ def isValidSudoku(self, board: List[List[str]]) -> bool:
+        for i in range(9):
+            visited = {}
+            for j in range(9):
+                if board[i][j] !=".":
+                    if board[i][j] not in visited:
+                        visited[board[i][j]] = 1
+                    else:
+                        print("false due to row: at {}th row". format(i))
+                        return False
+                    
+        for j in range(9):
+            visited = {}
+            for i in range(9):
+                 if board[i][j] != '.':
+                    if board[i][j] not in visited:
+                        visited[board[i][j]] = 1
+                    else:
+                        print("at {}th column".format(j))
+                        return False
+        
+        for I in range(3):
+            for J in range(3):
+                visited ={}
+                for i in range(3):
+                    for j in range(3):
+                        elt = board[3*I +i][3*J +j]
+                        if elt!= ".":
+                            if elt in visited:
+                                #print("wrong at {} {}box".format(I,J), visited, i, j)
+                                return False
+                            else:
+                                visited[elt] = 1
+        return True
+                
+                        
+                    
+            
+        
