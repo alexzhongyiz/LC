@@ -1,0 +1,21 @@
+#dfs:
+
+def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        candidates.sort()
+        res =[]
+        def dfs(temp, new_tar, can):
+            if new_tar == 0:
+                res.append(temp)
+            else:
+                for i in range(len(can)):
+                    if new_tar >= can[i]:
+                        dfs(temp + [can[i]], new_tar - can[i], can[i:])
+            
+            
+            
+            
+            
+            
+        dfs([],target, candidates)
+        return res
+            
