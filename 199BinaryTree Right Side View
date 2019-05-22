@@ -1,0 +1,20 @@
+#BFS: same idea as traversal by level
+#can also use DFS, see solution
+
+class Solution:
+    def rightSideView(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        res = []
+        level_dic =  {}
+        dic = [(root, 0)]
+        while dic:
+            node, level = dic.pop(0)
+            level_dic[level] = node 
+            if node.left:
+                dic.append((node.left, level + 1))
+            if node.right:
+                dic.append((node.right, level + 1))
+            
+        res = [level_dic[i].val for i in level_dic.keys()]     
+        return res
