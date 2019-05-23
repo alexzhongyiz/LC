@@ -1,0 +1,43 @@
+#DP:
+
+def countSubstrings(self, s: str) -> int:
+        if not s:
+            return 0
+        substring = []
+        table = [[False] * len(s) for _ in range(len(s) )]
+        for i in range(len(s)):
+            table[i][i] = True
+            substring.append(s[i])
+        for i in range(len(s) - 1):
+            if s[i] == s[i + 1]:
+                table [i][ i + 1] = True
+                substring.append(s[i:i + 2])
+        
+        for d in range(3, len(s) + 1):
+            for i in range(0, len(s) - d + 1 ):
+                j = i + d - 1
+                if s[i] == s[j] and table[i + 1][j - 1]:
+                    table[i][j] = True
+                    substring.append(s[i: j + 1])
+            
+        print(substring)
+        print(list(set(substring)))
+        return len(substring)
+      
+ # expand from center as solution:
+ 
+ def countSubstrings(self, s: str) -> int:
+        if not s:
+            return 0
+        n = len(s)
+        substring = []
+        for center in range( 2 * n - 1):
+            left = center // 2
+            right = left + center % 2
+            while left >= 0 and right < n and s[left] == s[right]:
+                substring.append(s[left: right + 1])
+                left -= 1
+                right += 1
+        #print(substring)
+        return len(substring)
+        
