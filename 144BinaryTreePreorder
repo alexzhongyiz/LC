@@ -13,4 +13,32 @@
             else:
                 root = stack.pop()
         return res
+        
+        
+        #Morris traversal, built from predecessor of preorder traversal:
+        
+        def preorderTraversal(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        res =[]
+        while root:
+            if not root.left:
+                res.append(root.val)
+                root = root.right
+            else:
+                pred = root.left
+                while pred.right and pred.right != root:
+                    pred = pred.right
+                if not pred.right:
+                    pred.right = root
+                    res.append(root.val)
+                    root = root.left
+                else:
+                    
+                    pred.right = None
+                    root = root.right
+            
+                    
+        return res                
+                
                 
