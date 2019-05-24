@@ -3,3 +3,28 @@ def maxDepth(self, root: TreeNode) -> int:
         if not root:
             return 0
         return max(self.maxDepth(root.left), self.maxDepth(root.right) ) + 1
+        
+        
+        
+#using iteration and stack:
+
+def maxDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        stack =[]
+        ans = 0
+        root_level = 1
+        while root or stack:
+            if root:
+                ans = max(ans, root_level)
+                if root.right:
+                    stack.append((root.right, root_level + 1))
+                root = root.left
+                root_level += 1
+                
+            else:
+                root, root_level = stack.pop()
+                
+        return ans        
+
+                
