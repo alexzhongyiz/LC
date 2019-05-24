@@ -23,4 +23,25 @@ class Solution:
                 res.append(node.val)
                 root = node.right
         return res
+        
+        
+ #Morris Traversal:
  
+ res = []
+        while root:
+            if not root.left:
+                res.append(root.val)
+                root = root.right
+            else:
+                pred = root.left
+                while pred.right and pred.right != root:
+                    pred = pred.right
+                if not pred.right:
+                    pred.right = root
+                    root = root.left
+                else:
+                    pred.right = None
+                    res.append(root.val)
+                    root = root.right
+
+        return res
