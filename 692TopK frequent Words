@@ -1,0 +1,13 @@
+def topKFrequent(self, words, k):
+        count = collections.Counter(words)
+        heap = [(-freq, word) for word, freq in count.items()]
+        heapq.heapify(heap)
+        return [heapq.heappop(heap)[1] for _ in xrange(k)]
+        #note above that we can also heapify a list of tuples 
+        
+#a way of simply sorting is :
+def topKFrequent(self, words, k):
+  count = collections.Counter(words)
+  candidates = list(count.keys())
+  candidates.sort(key = lambda w: (-count[w], w) ) #sort according to a specific function
+  return candidates[:k]
