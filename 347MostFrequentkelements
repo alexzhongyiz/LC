@@ -15,5 +15,26 @@ def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         
         count = collections.counter(nums)
         return heapq.nlargest(k, count.keys(), key = count.get )
+        
         #note that here count does the same as the dictionary about, namely it is a dicionary with keys elements of the list and 
         #values the count, so .keys(), .values(), .items() and .get() all the same.
+        
+        #also uses the built-in .most_common() function that essentially uses nlargest:
+        
+         return [k for k, v in collections.counter(nums).most_common(k)]
+         
+        #below is one without heap, it is actually O(N) 
+        def topKFrequent(self, nums, k):
+                frq = defaultdict(list)
+                for key, cnt in Counter(nums).items():
+                    frq[cnt].append(key)
+
+                res = []
+                for times in reversed(range(len(nums) + 1)):
+                    res.extend(frq[times])
+                    if len(res) >= k: return res[:k]
+
+                return res[:k]
+
+        
+        
