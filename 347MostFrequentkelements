@@ -1,0 +1,17 @@
+def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        dic = {}
+        for _, v in enumerate(nums):
+            dic[v] = dic[v] + 1 if v in dic else 1
+        return heapq.nlargest(k, dic.keys(), key = dic.get )    
+        
+            
+         #here uses the heap datastructure, where heapify takes O(N) and poping the largest element out of the heap takes O(lg N), so in 
+         #total takes O(k lgN)
+         
+         #also in heapq there is a built-in function nlargest, the calling is as https://www.geeksforgeeks.org/heap-queue-or-heapq-in-python/
+         
+         
+        simpler method:
+        
+        count = collections.counter(nums)
+        return heapq.nlargest(k, count.keys(), key = count.get )
