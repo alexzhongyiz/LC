@@ -20,7 +20,11 @@ import heapq
                 heapq.heappop(min_heap)
                 heapq.heappush(min_heap, num)
         return min_heap[0]
-      
+        
+#using klargest(): 1-liner
+ 
+return heapq.klargest(k, nums)[-1] 
+ 
 # O(n) time, quick selection
 the algorithm can be found in https://www.geeksforgeeks.org/quickselect-algorithm/ or wikipedia
 def findKthLargest(self, nums, k):
