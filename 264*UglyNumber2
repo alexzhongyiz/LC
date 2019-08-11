@@ -1,0 +1,52 @@
+def nthUglyNumber(self, n):
+    ugly = [1]
+    i2, i3, i5 = 0, 0, 0
+    while n > 1:
+        u2, u3, u5 = 2 * ugly[i2], 3 * ugly[i3], 5 * ugly[i5]
+        umin = min((u2, u3, u5))
+        if umin == u2:
+            i2 += 1
+        if umin == u3:
+            i3 += 1
+        if umin == u5:
+            i5 += 1
+        ugly.append(umin)
+        n -= 1
+    return ugly[-1]
+    
+    Therefore the OP's solution is having 3 pointers, namely i2, i3, and i5, they will keep track of which multiple of 2, 3, 5 
+    of the smaller ugly number they are pointing to. At every loop, you get three multiples of 2, 3 and 5 
+    and you pick the smallest one to append to the ugly number array, this will fix the problem with new ugly number being unsorted, 
+    and since we appended that smallest next ugly number, increment the pointer that generated that smallest ugly number 
+    so we can add the next bigger one in the future. Since the if-statements are parallel, 
+    this also prevent duplicates from being added to the ugly number array, since if two or three u2, u3, and u5 are the same,
+    their corresponding pointer will all be incremented.
+    
+    
+    #a different method using heap:
+    
+    def nthUglyNumber(self, n):
+        if n is 1:
+            return 1
+        h, val = [(2, 2), (3, 3), (5, 5)], 1
+        for i in range(1, n):
+            val, fact = heapq.heappop(h) #since Python uses min heap, this gives the smallest number
+            heapq.heappush(h, (val * 5, 5))
+            if fact <= 3:
+                heapq.heappush(h, (val * 3, 3))
+            if fact is 2:
+                heapq.heappush(h, (val * 2, 2))
+        return val
+        
+        
+        similar idea but more elegant:
+        
+        def nthUglyNumber(self, n):
+        q, counted = [1], {1}
+        for i in range(n - 1):
+            m = heappop(q)
+            for mm in [2*m, 3*m, 5*m]:
+                if mm not in counted:
+                    heappush(q, mm)
+                    counted.add(mm)        
+        return heappop(q)
