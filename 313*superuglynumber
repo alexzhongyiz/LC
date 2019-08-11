@@ -1,0 +1,50 @@
+     #first is copycat of the last solution of 264 
+        q = [1]
+        counted = {1}
+        val = 1
+        for k in range(n):
+            val = heapq.heappop(q)
+            for p in primes:
+                if val * p not in counted:
+                    heapq.heappush(q, val* p)
+                counted.add(val * p)
+        return valq = [1]
+        counted = {1}
+        val = 1
+        for k in range(n):
+            val = heapq.heappop(q)
+            for p in primes:
+                if val * p not in counted:
+                    heapq.heappush(q, val* p)
+                counted.add(val * p)
+        return val
+        
+        
+        #this one is faster since the heap is constant at the size of primes:
+        
+        	cand = [(p, p, 1) for p in primes]
+          ugly = [1]
+          for _ in range(n-1):
+            ugly.append(cand[0][0])
+            while cand[0][0] == ugly[-1]:
+              x, p, i = heapq.heappop(cand)
+              heapq.heappush(cand, (p*ugly[i], p, i+1))
+          return ugly[-1]
+          
+          
+         #We can also use multiple pointers as 264:where the pointers are stored in index
+         
+          def nthSuperUglyNumber(self, n, primes):
+        size = len(primes)
+        ugly, dp, index, ugly_nums = 1, [1], [0] * size, [1] * size
+        for i in range(1, n):
+            # compute possibly ugly numbers and update index
+            for j in range(0, size):
+                if ugly_nums[j] == ugly:
+                    ugly_nums[j] = dp[index[j]] * primes[j]
+                    index[j] += 1
+            # get the minimum
+            ugly = min(ugly_nums)
+            dp.append(ugly)
+        return dp[-1]
+        
