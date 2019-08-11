@@ -1,0 +1,42 @@
+#my first method:
+
+def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        node = ListNode(0)
+        dummy = node 
+        ###the next few lines are to deal with [[],[1,2,3]] inputs
+        #empty_index = [i for i in range(len(lists)) if not lists[i]]
+        #valid_index = set(i for i in range(len(lists))) - set(empty_index)
+        #lists = [lists[i] for i in valid_index]
+        lists = [n for n in lists if n]
+        while lists:
+            index, val = 0, lists[0].val
+            for i in range(1,len(lists)):
+                if lists[i].val < val:
+                    index,val = i, lists[i].val
+            if lists[index].next:
+                node.next = lists[index]
+                lists[index] = lists[index].next
+            else:
+                node.next = lists[index]
+                lists.pop(index)
+            node = node.next
+            #print([n.val for n in lists ])
+            
+        return dummy.next
+        
+        #better use priority queue:
+        
+        from heapq import heappush, heappop, heapreplace, heapify
+        dummy = node = ListNode(0)
+        h = [(n.val, n) for n in lists if n]
+        heapify(h)
+        while h:
+            v, n = h[0]
+            if n.next is None:
+                heappop(h) #only change heap size when necessary
+            else:
+                heapreplace(h, (n.next.val, n.next))
+            node.next = n
+            node = node.next
+
+        return dummy.next
