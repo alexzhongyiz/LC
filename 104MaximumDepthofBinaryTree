@@ -27,4 +27,36 @@ def maxDepth(self, root: TreeNode) -> int:
                 
         return ans        
 
-                
+#DFS with stack:
+
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        stack =[(root, 1)]
+        ans = 1
+        while stack:
+            node, depth = stack.pop()
+            if node:
+                ans = max(ans, depth)
+                stack.append((node.right, depth + 1))
+                stack.append((node.left, depth + 1))
+            #print([n.val for n, _ in stack if n])
+        return ans
+
+#BFS with queue:
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        
+    
+        if not root:
+            return 0
+        queue = [(root, 1)]
+        ans = 1
+        while queue:
+            node, depth = queue.pop(0)
+            if node:
+                ans = max(ans, depth)
+                queue.append((node.left, depth + 1))
+                queue.append((node.right, depth + 1))
+        return ans
