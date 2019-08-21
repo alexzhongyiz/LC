@@ -1,0 +1,29 @@
+The naive solution motivated by the top answer:
+
+def dfs(node):
+            if not node: return 0, 0
+            l, r = dfs(node.left), dfs(node.right)
+            return max(l) + max(r), node.val + l[0] + r[0]
+        return max(dfs(root))
+        
+DP solution motivated by the top answer:
+def rob(self, root: TreeNode) -> int:
+        newmap = {}
+        def robsub(root, hashmap):
+            if not root:
+                return 0
+            if root in hashmap:
+                return hashmap[root]
+            
+            val = 0
+            if root.left:
+                val += robsub(root.left.left, hashmap) + robsub(root.left.right, hashmap)
+            if root.right:
+                val += robsub(root.right.left, hashmap) + robsub(root.right.right, hashmap)
+                
+            val = max(root.val + val, robsub(root.left, hashmap) + robsub(root.right, hashmap))
+            hashmap[root] = val
+            
+            return val
+                
+        return robsub(root, newmap) 
