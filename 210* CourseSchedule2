@@ -1,0 +1,38 @@
+This uses global variable, note to make it global we need to declare it both outside and inside the dfs function
+
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        graph = collections.defaultdict(list)
+        for pre in prerequisites:
+            graph[pre[0]].append(pre[1])
+        
+        visited = [0]* numCourses
+        stack = []
+        global flag
+        flag = 1
+        
+        def topsort(v):
+            global flag
+            
+            if visited[v] == -1:
+                flag = 0
+                return
+            if visited[v] == 0:
+                visited[v] = -1
+
+                for u in graph[v]:
+                    if visited[u] == -1:
+                        
+                        flag = 0
+                        return
+                    if visited[u] == 0:
+                        topsort(u)
+
+                stack.append(v)
+                visited[v] = 1
+                
+        
+        for v in range(numCourses):
+            if visited[v] == 0:
+                topsort(v)
+        return stack if flag == 1 else []
