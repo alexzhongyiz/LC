@@ -16,3 +16,34 @@ class Solution:
         M, N = len(matrix), len(matrix[0])
         dp = [[0] * N for i in range(M)]
         return max(dfs(x, y) for x in range(M) for y in range(N))
+
+
+#my code:
+class Solution:
+    def longestIncreasingPath(self, matrix):
+
+        def dfs(x, y):
+            nonlocal res
+            visited[x][y] = 1
+            for v, h in [(-1,0),(1, 0), (0, -1), (0, 1)]:
+                if 0 <= x + v < M and 0<=y + h < N and matrix[x + v][y + h] > matrix[x][y]:
+                    if visited[x + v][y + h] == 0:
+                        dp[x][y] = max(dfs(x + v, y + h) + 1, dp[x][y] )
+                        res = max(res, dp[x][y])
+                    else:
+                        dp[x][y] = max(dp[x + v][y + h] + 1, dp[x][y])
+                        res = max(res, dp[x][y])
+
+            return dp[x][y]
+
+        if not matrix or not matrix[0]:
+            return 0
+        M, N = len(matrix), len(matrix[0])
+        visited = [[0]* N for _ in range(M)]
+        dp = [[1]* N for _ in range(M)]
+        res = 1
+        for x in range(M):
+            for y in range(N):
+                if visited[x][y] == 0:
+                    dfs(x, y)
+        return res
