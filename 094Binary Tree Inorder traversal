@@ -23,7 +23,33 @@ class Solution:
                 res.append(node.val)
                 root = node.right
         return res
-        
+  
+  #my own code using stack:
+  
+  class Solution:
+    def inorderTraversal(self, root: TreeNode) -> List[int]:
+        if not root:
+            return  []
+        stack, res = [root],[]
+
+        while stack:
+            root = stack.pop()
+            if root.left and root.left not in res:
+
+                if root.right:
+                    stack.append(root.right)
+                stack.append(root)
+                if root.left:
+                    stack.append(root.left)
+            else:
+                res.append(root)
+                if root.right and root.right not in stack:
+                    stack.append(root.right)
+
+
+
+        return [node.val for node in res]
+    
         
  #Morris Traversal:
  
