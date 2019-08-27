@@ -1,0 +1,13 @@
+#solution by 公瑾
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        N = len(nums)
+        dp = [0] * N
+        for i in range(N):
+            for j in range(i):
+                if nums[j] < nums[i]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+        return max(dp)
+  
+#dp[i] denote the length of LIS that ends in position i.
+
