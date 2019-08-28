@@ -1,0 +1,49 @@
+
+1. StrangeSorting:
+
+
+#mapping is like [3,5,4,6,2,7,9,8,0,1]
+#nums is like['990', '332', '32']
+import collections
+def sortingArray(mapping, nums) -> list:
+    if not nums:
+        return []
+    dic = collections.defaultdict(list)
+    for i in range(len(nums)):
+        num = nums[i]
+        actual_digits = [str(mapping.index(int(num[j]))) for j in range(len(num)) ]
+        actual_num = int("".join(actual_digits))
+        dic[actual_num].append(i)
+    #print(dic)
+    actual_nums = list(dic.keys())
+    actual_nums.sort()
+    #print(actual_nums)
+    res = []
+    for actual_num in actual_nums:
+        for index  in dic[actual_num]:
+            res.append(nums[index])
+    return res
+    
+    
+ 
+ 
+2. Rotate the string:
+#originalString is like ['a', 'c', 'e','a', 'h','j','z','l'] or 'abcdefg'
+#direction = [0,1,0,0,1]# 0 denote left
+#amount = [1,3,5,14,6]
+def rotateTheString(originalString, direction, amount):
+    if len(originalString) in {0,1}:
+        return originalString
+    q = len(direction)
+    total_amount = 0
+    for i in range(q):
+        total_amount += amount[i]* (2*direction[i] - 1)
+    #print(total_amount, len(originalString))
+    
+    amount_to_right = total_amount % len(originalString)
+    return originalString[len(originalString) - amount_to_right:] + originalString[: len(originalString) - amount_to_right]
+    
+    
+3. Share Purchases:
+
+    
