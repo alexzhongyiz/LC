@@ -4,6 +4,44 @@
 
 #mapping is like [3,5,4,6,2,7,9,8,0,1]
 #nums is like['990', '332', '32']
+#Optimal solution:
+
+
+
+
+
+
+
+ can't use int in any way as the number of digits can exceed 100, while an int has upper limit 2^31 ~ 2 e10
+must
+def sortingArray(mapping, nums):
+    import collections
+    dic = collections.defaultdict()
+    for i, num in enumerate(mapping):
+        dic[str(num)] = str(i)
+    zero = str(mapping[0])
+    new_string_to_old_string = collections.defaultdict(list)
+    
+    for k in range(len(nums)):
+        string = nums[k]
+        for i in range(len(string)):
+            if string[i] != zero:
+                break
+        new_string = "".join(dic[s] for s in string[i:])
+        new_string_to_old_string[new_string].append(string)
+    #print(new_num_to_old_string)
+    new_strings = list(new_string_to_old_string.keys())
+    new_nums = [(int(new_string), new_string )for new_string in new_strings]
+    new_nums.sort()
+    
+    
+    #print(new_nums)
+    return [old_string for num, new_string in new_nums for old_string in  new_string_to_old_string[new_string] ]
+    
+
+
+
+#Slow Solution:
 import collections
 def sortingArray(mapping, nums) -> list:
     if not nums:
@@ -76,6 +114,67 @@ def analyzeInvestments(s):
     return ans
           
 4.Grid Game:
+most optimal:
+
+def gridGame3(grid, k, rules):
+    rows, cols = len(grid), len(grid[0])
+    neighbors_A = [(-1,0),(0,-1),(-1,1),(-1,-1)]
+    neighbors_B = [(1,-1),(1,0),(0,1),(1,1)]
+    for turn in range(k):
+        for row in range(rows):
+            for col in range(cols):
+                
+                live_neighbors = 0
+                for neighbor in neighbors_A:
+                    r, c = row + neighbor[0], col + neighbor[1]
+                    if 0<= r< rows and 0<= c < cols:
+                        if grid[r][c] in {1,2}:
+                            live_neighbors += 1
+                for neighbor in neighbors_B:
+                    r, c = row + neighbor[0], col + neighbor[1]
+                    if 0<= r< rows and 0<= c < cols:
+                        if grid[r][c] %2 == 1:
+                            live_neighbors += 1
+                if rules[live_neighbors] =='alive':
+                    if grid[row][col] %2 == 1:
+                        grid[row][col] = 1
+                    else: grid[row][col] = 3
+                else: grid[row][col] = 0 if grid[row][col]%2 == 0 else 2
+        #print(grid)
+    for row in range(rows):
+        for col in range(cols):
+            grid[row][col] = grid[row][col] %2
+    
+    return grid
+
+
+
+
+
+#slightly better
+def gridGame(grid, k, rules):
+    rows, cols = len(grid), len(grid[0])
+    neighbors = [(-1,0), (1,0),(0,-1),(0,1),(-1,-1),(-1,1),(1,-1),(1,1)]
+    for turn in range(k):
+        for row in range(rows):
+            for col in range(cols):
+                
+                live_neighbors = 0
+                for neighbor in neighbors:
+                    r,c = row + neighbor[0], col + neighbor[1]
+                    if 0<= r < rows and 0 <= c < cols and abs(grid[r][c]) ==1  :
+                        live_neighbors +=1
+                if rules[live_neighbors] == 'dead' and grid[row][col] == 1:
+                    grid[row][col] = -1
+                if rules[live_neighbors] =='alive' and grid[row][col] == 0:
+                    grid[row][col] = 2
+        for row in range(rows):
+            for col in range(cols):
+                grid[row][col] = 0 if grid[row][col] <= 0 else 1
+        print(grid)
+    
+    return grid
+
 
 def gridGame(grid, k, rules):
     if not grid or not grid[0]:
@@ -104,4 +203,85 @@ def gridGame(grid, k, rules):
                 grid[i][j] = [0,1][rules[count[i][j]] == 'alive']
        # print(grid)
     return grid
+    
+5. SpiralOrder and check prime:
+
+###Time complexity!!!. Maybe can make primes a global variable and then edit
+
+def spiralOrderPrimes2(grid):
+    if not grid or not grid[0]:
+        return []
+    
+    def SievePrime(n):
+        visited = [False]* (n+ 1)
+        
+        for p in range(2, n + 1):
+            if visited[p]:
+                continue
+            k = 0
+            multiple = p *p
+            while multiple  <=n:
+                visited[multiple] = True
+                multiple += p
+        return {k for k in range(2, n + 1) if not visited[k] }
+    
+    r_s, c_s, r_e, c_e =0,0, len(grid) , len(grid[0])
+    traverse = []
+    r,c = 0, 0
+    #primes = SievePrime(max(grid[i][j] for j in range(c_e) for i in range(r_e)))
+    primes  = SievePrime(1000000)
+    
+    while r_s < r_e and c_s < c_e:
+        
+        traverse.extend([grid[r_s][j] for j in range(c_s, c_e)])  
+        r_s += 1
+        
+                
+        traverse.extend([grid[i ][ c_e -1 ] for i in range(r_s, r_e)])    
+        c_e -= 1
+        
+        traverse.extend([grid[r_e - 1 ][j] for j in range(c_e - 1, c_s - 1, -1)])    
+        r_e -= 1
+        
+        traverse.extend([grid[i][c_s] for  i in range(r_e -1 , r_s - 1, -1)])    
+        c_s += 1
+    #print(traverse)   
+    return [n for n in traverse if n in primes]
+
+
+
+    
+   
+6. Find the Rank
+def findtheRank(performance, rank):
+    import collections
+    n = len(performance)
+    total_score = [sum(performance[i][j] for j in range(len(performance[0]))) for i in range(len(performance))]
+    
+    score_to_index = collections.defaultdict(list)
+    for i, s in enumerate(total_score):
+        score_to_index[s].append(i)
+    
+    total_score.sort(reverse = True)
+    ans = []
+    for s in total_score:
+        ans.extend(score_to_index[s])
+    print(ans)
+    return ans[rank - 1]
+    
+    
+    7. def weeklyAverage(prices):
+    n = len(prices)
+    week = sum(prices[0:7])/7
+    averages = ['%.2f' % week]
+    
+    for left in range(0, n -7 ):
+        week = week - prices[left] + prices[left + 7]
+        average = week/7
+        averages.append('%.2f' % ave)
+    return averages
+    
+ 
+        
+    
     
