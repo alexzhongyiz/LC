@@ -1,19 +1,71 @@
 
 1. StrangeSorting:
-
+can't use int in any way as the number of digits can exceed 100, while an int has upper limit 2^31 ~ 2 e10
 
 #mapping is like [3,5,4,6,2,7,9,8,0,1]
 #nums is like['990', '332', '32']
-#Optimal solution:
+#Optimal solution: self define compare function and then use wrapper in python3 for sort:
+
+def sortingArray(mapping, nums):
+    if not nums or len(nums)==0:
+        return []
+    
+    sort_list = []
+    
+    import collections
+    dic = collections.defaultdict()
+    for i, num in enumerate(mapping):
+        dic[str(num)] = str(i)
+    zero = str(mapping[0])
+    
+    def getnewstr(old_string, dic, zero):
+    
+        for i in range(len(old_string)):
+            if old_string[i] != zero:
+                break
+        return "".join([dic[s] for s in old_string[i:]])
+    
+    for pos in range(len(nums)):
+        old_str = nums[pos]
+        new_str = getnewstr(old_str,dic, zero)
+        sort_list.append((len(new_str),new_str, pos, nums[pos]))
+    
+    print(sort_list)
+        
+    def comparestr(str1, str2):
+        return (str1 > str2) - (str2 > str1) 
+    
+    def comparetup(tup1, tup2):
+        if tup1[0] == tup2[0]:
+            return comparestr(tup1[1], tup2[1])
+        return tup1[0] - tup2[0]
+    
+    def cmp_to_key(mycmp):
+    
+        class K:
+            def __init__(self, obj, *args):
+                self.obj = obj
+            def __lt__(self, other):
+                return mycmp(self.obj, other.obj) < 0
+            def __gt__(self, other):
+                return mycmp(self.obj, other.obj) > 0
+            def __eq__(self, other):
+                return mycmp(self.obj, other.obj) == 0
+            def __le__(self, other):
+                return mycmp(self.obj, other.obj) <= 0
+            def __ge__(self, other):
+                return mycmp(self.obj, other.obj) >= 0
+            def __ne__(self, other):
+                return mycmp(self.obj, other.obj) != 0
+        return K
+    
+    
+    sort_list.sort(key = cmp_to_key(comparetup))
+    print(sort_list)
+    return [tup[3] for tup in sort_list]
 
 
-
-
-
-
-
- can't use int in any way as the number of digits can exceed 100, while an int has upper limit 2^31 ~ 2 e10
-must
+#wrong answer
 def sortingArray(mapping, nums):
     import collections
     dic = collections.defaultdict()
