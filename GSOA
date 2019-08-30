@@ -87,6 +87,31 @@ def rotateTheString(originalString, direction, amount):
 #list the number of substring that contains the most three major companies(represented by most 3 common letters)
 #eg: s = 'ABCZBCA', then {ABC, ABCZ, ...ABCZBCA, BCZBCA, CZBCA, ZBCA, BCA} are the possible substrings 
 
+
+#two pointer, O(n):
+def analyzeInvestments(s):
+    
+    res = 0
+    n = len(s)
+    if n<3:
+        return 0
+    abc_count = {"A":0,"B":0,"C":0}
+    left,right = 0, -1
+    while right < n and left < n:
+        while right < n-1 and not all(abc_count.values()):
+            right += 1
+            if s[right] in "ABC":
+                abc_count[s[right]]+=1
+        if not all(abc_count.values()):
+            break
+        else:
+            res+= n-right
+            if s[left] in abc_count:
+                abc_count[s[left]]-=1
+            left += 1
+    return res
+
+
 def analyzeInvestments(s):
     """
     import collections
@@ -115,7 +140,9 @@ def analyzeInvestments(s):
           
 4.Grid Game:
 most optimal:
-
+#upper left in {1,2} add live neighbor
+#lower right odd add live neighbor
+#alive ->alive: 1; alive->dead: 2; dead -> alive: 3; dead-> dead: 0
 def gridGame3(grid, k, rules):
     rows, cols = len(grid), len(grid[0])
     neighbors_A = [(-1,0),(0,-1),(-1,1),(-1,-1)]
@@ -253,6 +280,25 @@ def spiralOrderPrimes2(grid):
     
    
 6. Find the Rank
+#better time when rank is relatively small
+def findtheRank2(performance, rank):
+    import collections
+    import heapq
+    n = len(performance)
+    total_score = [sum(performance[i][j] for j in range(len(performance[0]))) for i in range(len(performance))]
+    #print(total_score)
+    score_to_index = collections.defaultdict(list)
+    for i, s in enumerate(total_score):
+        score_to_index[s].append(i)
+    
+    first_k = heapq.nlargest(rank,total_score)
+    ans = []
+    for s in first_k:
+        ans.extend(score_to_index[s])
+    #print(ans)
+    return ans[rank - 1]
+
+
 def findtheRank(performance, rank):
     import collections
     n = len(performance)
@@ -281,7 +327,28 @@ def findtheRank(performance, rank):
         averages.append('%.2f' % ave)
     return averages
     
- 
+
+8.most common:
+
+def maxcommon(s):
+    mapr = collections.Counter(s)
+    mapl = {}
+    for key in mapr.keys():
+        mapl[key] = 0
+    cur = ans = 0
+    for cut in range(0, len(s)- 1):
+        char = s[cut]
+        if mapr[char] >= mapl[char] + 2:
+            cur = cur + 1
+        elif mapr[char] <= mapl[char]:
+            cur -= 1
+        ans = max(ans, cur)
+        
+        mapr[char] -= 1
+        mapl[char] += 1
+        
+    return ans   
+        
         
     
     
