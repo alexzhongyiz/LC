@@ -1,0 +1,41 @@
+ first sort the chains by word length, then for each word, take out one of the characters and see if it is in the list, if so, then
+ update the words.
+ 
+ 
+ def longestStrChain(self, words: List[str]) -> int:
+        words.sort(key = len)
+        dp = {}
+        ans = 0
+        for word in words:
+            dp[word] = max(dp.get(word[:i] + word[i+1:], 0) + 1 for i in range(len(word)) )
+            ans = max(ans, dp[word])
+        return ans
+        
+  def longestStrChain(self, words: List[str]) -> int:
+        words.sort(key = len)
+        dp = {}
+        
+        for word in words:
+            dp[word] = max(dp.get(word[:i] + word[i+1:], 0) + 1 for i in range(len(word)) )
+            
+        return max(dp.values())
+        
+   or this:
+   
+   class Solution:
+    def longestStrChain(self, words):
+        words.sort(key=lambda x:len(x))
+        d = collections.defaultdict(list)
+        for index, word in enumerate(words):
+            for i in range(len(word)+1):
+                s = word[:i] + '_' + word[i:]
+                d[s].append(index)
+
+        n = len(words)
+        dp = [1] * n
+        for i, word in enumerate(words):
+            for j in range(len(word)):
+                s = word[:j] + '_' + word[j+1:]
+                if s in d:
+                    dp[i] = max(dp[i], dp[d[s][0]]+1)
+        return max(dp)
