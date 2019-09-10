@@ -1,0 +1,64 @@
+DFS solution:
+def findCircleNum(M) -> int:
+    if not M:
+        return 0
+    N = len(M)
+    visited = set()
+    def dfs(node):
+        for k in range(N):
+            dif = M[node][i]
+            if dif and (k not in visited):
+                print(k)
+                visited.add(k)
+                dfs(k)
+                
+    ans = 0        
+    for i in range(N):
+        if i not in visited:
+            dfs(i)
+            ans +=1
+        
+    return ans 
+
+BFS solution:
+def findCircleNum(M):
+    
+    visited = set()
+    def bfs(node):
+        queue = []
+        for k in range(len(M)):
+            fri = M[node][k]
+            if fri and k not in visited:
+                visited.add(k)
+                queue.append(k)
+        for k in queue:
+            bfs(k)
+    ans = 0           
+    for i in range(len(M)):
+        if i not in visited:
+            bfs(i)
+            ans += 1
+    return ans
+    
+Union Find solution:
+
+def findCircleNum(self,M):
+        """
+        :type M: List[List[int]]
+        :rtype: int
+        """
+        def find(node):
+            if circles[node] == node: return node
+            root = find(circles[node])
+            circles[node] = root
+            return root
+
+        n = len(M)
+        circles = {x:x for x in range(n)}
+        num = n
+        for i in range(n):
+            for j in range(i, n):
+                if i != j and M[i][j] == 1 and find(i) != find(j):
+                    circles[find(j)] = find(i)   
+        #print(circles)
+        return sum([1 for k, v in circles.items() if k == v])
