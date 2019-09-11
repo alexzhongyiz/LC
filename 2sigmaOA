@@ -1,0 +1,36 @@
+missingWords:
+
+def missingWords(s, t):
+    #s contains t
+    longer = s.split()
+    shorter = t.split()
+    print(longer, shorter)
+    pointer = 0
+    while shorter:
+        word = shorter.pop(0)
+        while longer[pointer]!= word:
+            pointer += 1
+        longer.pop(pointer)
+    return " ".join(longer)
+    
+    
+    substring:#one pass, seems to be okay
+    
+    def findsubStrings(s):
+    Vowel = set('aeiou')
+    lowest, highest = '~', ''
+    first_con, last_con = None,None
+    for i in range(len(s) - 1, -1, -1):
+        if s[i] not in Vowel:
+            if not last_con:
+                last_con = i
+            first_con = i
+        else:
+            if first_con:
+                lowest = min(lowest, s[i: first_con + 1])
+                highest = max(highest, s[i: last_con + 1])
+    #print(lowest, highest)
+    if lowest =='~':
+        print('' ,'', sep = '\n')
+    else:
+        print(lowest, highest, sep = '\n')
