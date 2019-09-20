@@ -11,3 +11,13 @@ class Solution:
   
 #dp[i] denote the length of LIS that ends in position i.
 
+or this faster :
+
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        N = len(nums)
+        dp = [0]*N
+        for i in range(N):
+            dp[i] = max( [dp[j] + 1  for j in range(i) if nums[j] < nums[i] ], default = 1)
+        return max(dp)
