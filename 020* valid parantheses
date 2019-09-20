@@ -1,0 +1,36 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        for i in range(len(s)):
+            if s[i] in {'(',"{", "["}:
+                stack.append(s[i])
+            
+            else:
+                if not stack:
+                    return False
+                else:
+                    l = stack.pop()
+                    if (s[i] == ")" and l == "(" ) or( s[i] == "]" and l =="[") or (s[i] == "}" and l == '{'): 
+                        continue
+                    else: return False
+        if stack:
+            return False
+        return True
+        
+        
+   
+    def isValid(self, s: str) -> bool:
+        stack = []
+        for char in s:
+            if char in {'(', '[', '{'}:
+                stack.append(char)
+            else:
+                if char== '}':
+                    if not stack or stack.pop()!= '{':
+                        return False
+                if char == ")":
+                    if not stack or stack.pop()!= "(":
+                        return False
+                if char == "]" and (not stack or stack.pop()!= "["):
+                    return False
+        return True if not stack else False
