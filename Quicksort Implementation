@@ -1,0 +1,73 @@
+My own code: 
+
+I shouldn't have used the left most as pivot because that gives worst time complexity when the array itself is already sorted.
+Anyhow: here is the code, where the first function partitions the array according to the pivot
+r is the index of the first element that is larger than the pivot; note here we have partitioned the elements same as the pivot as left
+
+
+def findpivotplace(nums, i):
+    N= len(nums)
+    pivot = nums[i]
+    r = i + 1;
+    while r <= N -1:
+        while r <= N -1 and nums[r] <= pivot:
+            r += 1
+        if r == N:
+            break
+        l = r + 1
+        while  l <= N - 1 and nums[l] > pivot:
+            l += 1
+            
+        if l == N:
+            break
+        nums[l], nums[r] = nums[r], nums[l]
+        r += 1
+    nums[r - 1], nums[i] = nums[i], nums[r - 1]
+    print(nums, pivot)
+    #return nums[:r - 1], r - 1, nums[r:]
+    return r -1
+    
+    def quicksort(nums):
+    if len(nums) == 0 or len(nums) == 1:
+        return nums
+    
+    idx = findpivotplace(nums,0)
+    return quicksort(nums[:idx]) + [nums[idx]] + quicksort(nums[idx + 1: ])
+    
+    
+    code from geeks for geeks:
+    
+    def partition(arr,low,high): 
+    i = ( low-1 )         # index of smaller element 
+    pivot = arr[high]     # pivot 
+  
+    for j in range(low , high): 
+  
+        # If current element is smaller than the pivot 
+        if   arr[j] < pivot: 
+          
+            # increment index of smaller element 
+            i = i+1 
+            arr[i],arr[j] = arr[j],arr[i] 
+  
+    arr[i+1],arr[high] = arr[high],arr[i+1] 
+    return ( i+1 ) 
+  
+# The main function that implements QuickSort 
+# arr[] --> Array to be sorted, 
+# low  --> Starting index, 
+# high  --> Ending index 
+  
+# Function to do Quick sort 
+def quickSort(arr,low,high): 
+    if low < high: 
+  
+        # pi is partitioning index, arr[p] is now 
+        # at right place 
+        pi = partition(arr,low,high) 
+  
+        # Separately sort elements before 
+        # partition and after partition 
+        quickSort(arr, low, pi-1) 
+        quickSort(arr, pi+1, high) 
+  
