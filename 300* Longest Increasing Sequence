@@ -21,3 +21,6 @@ or this faster :
         for i in range(N):
             dp[i] = max( [dp[j] + 1  for j in range(i) if nums[j] < nums[i] ], default = 1)
         return max(dp)
+
+O(nlogn) explanation: amazing using binary search.
+https://leetcode.com/problems/longest-increasing-subsequence/discuss/74824/JavaPython-Binary-search-O(nlogn)-time-with-explanation
