@@ -1,0 +1,42 @@
+class Solution:
+    #This is inspired by the CPP pdf
+    def trap(self, height: List[int]) -> int:
+        max_left,max_right=[],[]
+        ml, mr,Area=0,0,0
+        for i in range(len(height)):
+            ml=max(ml,height[i])
+            max_left.append(ml)
+        for j in reversed(range(len(height))):
+            mr=max(mr, height[j])
+            max_right.insert(0,mr)
+        for k in range(len(height)):
+            Area+= min(max_right[k], max_left[k])-height[k]
+        return Area
+        
+        
+        my Divide and Conquer solution:
+        
+        def trap(self, height: List[int]) -> int:
+        def area_helper(left_M, right_M, in_bet, highest):
+            if not in_bet:
+                return 0
+            
+            if highest:
+                return sum(min(left_M, right_M) - k for k in in_bet)
+            else:
+                if left_M ==0:
+                    if right_M == 0:
+                        h_max = max(in_bet)
+                        idx = in_bet.index(h_max)
+                        return area_helper(left_M, h_max, in_bet[:idx], 0) + area_helper(h_max, right_M, in_bet[idx + 1:], 0)
+                    else:
+                        h_max = max(in_bet)
+                        idx = in_bet.index(h_max)
+                        return area_helper(left_M, h_max, in_bet[:idx], 0) + area_helper(h_max, right_M, in_bet[idx + 1:], 1)
+                
+                else: #right end is 0
+                    h_max = max(in_bet)
+                    idx = in_bet.index(h_max)
+                    return area_helper(left_M, h_max, in_bet[:idx], 1) + area_helper(h_max, right_M, in_bet[idx + 1:], 0)
+        
+        return area_helper(0,0,height, 0)
