@@ -1,0 +1,21 @@
+#think of it as state machine (i.e. Markov chain-ish):
+
+https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/discuss/75928/Share-my-DP-solution-(By-State-Machine-Thinking)
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        if len(prices) <= 1:
+            return 0
+        a=[0]*len(prices) #a is the state of can buy
+        b = [0]*len(prices) #b is the state of just bought
+        c = [0]*len(prices) #c is the state of just sold, can't buy
+        a[0] = 0
+        b[0] = -prices[0]
+        c[0] = -float('inf')
+        #print(a, b,c)
+        for i in range(1, len(prices)):
+            a[i] = max(a[i - 1], c[i -1])
+            b[i] = max(b[i -1], a[ i -1] - prices[i])
+            c[i] = b[i -1] + prices[i]
+            #print(i, prices[i],a[i], b[i], c[i])
+        return max(a[len(prices) - 1], c[len(prices) - 1])
