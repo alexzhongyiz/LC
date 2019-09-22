@@ -1,0 +1,30 @@
+#using hash table, O(n) time, O(n) space
+class Solution:
+    def hasCycle(self, head: ListNode) -> bool:
+        if head == None:
+            return False
+        seen = set()
+        seen.add(head)
+        while head.next:
+            if head.next in seen:
+                #print(seen)
+                return True
+            head = head.next
+            seen.add(head)
+            
+        return False
+ 
+ #What if only using O(1) space:
+ 
+ slow and fast pointers(cyclists) in a course, fast always goes twice, slow always goes one step
+ time complexity O(non-cyclic + cyclic) = O(n)
+ 
+ 
+ def hasCycle(self, head: ListNode) -> bool:
+        slow = fast = head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+            if slow == fast:
+                return True
+        return False
