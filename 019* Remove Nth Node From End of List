@@ -1,0 +1,45 @@
+Given a linked list, remove the n-th node from the end of list and return its head.
+
+My first thought: find the number of nodes first, calculate the target node, then remove
+ def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        count =0
+        node = head
+        while node:
+            node = node.next
+            count += 1
+        tar = count + 1 - n
+        
+        newhead = ListNode(0)  #this is purely for the sake of the case where we need to remove the first node (i.e. head node)
+        newhead.next = head
+        
+        node = newhead
+        for i in range(tar - 1):
+            node = node.next
+        rem = node.next
+        newnxt = rem.next
+        node.next = newnxt
+        
+        return newhead.next
+        
+        
+  Follow up: Could you do this in one pass?
+   I came up with this solution which is same in time and space complexity but it is one scan, and the solution is exactly this idea.
+   def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        newhead = ListNode(0)
+        newhead.next = head
+        
+        slow = newhead
+        fast = newhead
+        for i in range(n):
+            fast = fast.next
+        while fast.next:
+            fast = fast.next
+            slow = slow.next
+        remove = slow.next
+        newnext = remove.next
+        slow.next = newnext
+        
+        return newhead.next
+        
+        
+        
