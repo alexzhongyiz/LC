@@ -1,0 +1,28 @@
+Want to have O(1) space!
+
+class Solution:
+    def isPalindrome(self, head: ListNode) -> bool:
+        if not head:
+            return True
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        
+        cur = slow
+        node = None
+        nxt = cur.next
+        cur.next = node
+        while nxt:
+            node = cur
+            cur = nxt
+            nxt = cur.next
+            cur.next = node
+        while head and head!= slow:
+            if head.val != cur.val:
+                return False
+            else:
+                head = head.next
+                cur = cur.next
+        return True
+        
