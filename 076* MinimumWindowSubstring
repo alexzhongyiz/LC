@@ -1,0 +1,36 @@
+Took me an hour to debug:
+
+class Solution:
+    
+    def valid(self, seen, Count):
+        return all(seen[key] >= Count[key] for key in Count.keys())
+    
+    def minWindow(self, s: str, t: str) -> str:
+        Count = collections.Counter(t)
+        min_len = len(s) + 1
+        
+        ans = ""
+        seen = collections.defaultdict(int)
+        
+        l, r = 0, 0
+        while r <= len(s) -1 :
+            if not self.valid(seen, Count):
+                if s[r] in Count.keys():
+                    seen[s[r]] += 1
+                    #print("r:", r)
+                while self.valid(seen, Count): #this loop is inside if not self.valid(..., becauseafter adding the last char, you want to 
+                shorten the window from the left pointer immediately.
+                    if r - l + 1  < min_len:
+                        min_len = r - l + 1 
+                        ans = s[l: r + 1]
+                        #print(ans)
+
+                    if s[l] in Count.keys():
+                        seen[s[l]] -= 1
+                        #print("l", l)
+                    l += 1
+ 
+             r+= 1
+        
+        return ans
+                
