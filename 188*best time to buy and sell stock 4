@@ -36,3 +36,31 @@ def maxProfit(self, k: int, prices: List[int]) -> int:
         #print(cash)
         #print(hold)
         return cash[-1][k]
+
+Notice that every time we finish with hold[i][l], we never use i any more, thus, we can only use 1-d lists of length (k+1):
+here buy is the same as hold and sell is the same as cash
+def maxProfit(self, k: int, prices: List[int]) -> int:
+        if len(prices) <=1:
+            return 0
+        if k >= len(prices)//2:
+            return sum(max(prices[i] - prices[i -1], 0) for i in range(1, len(prices)))
+        
+        #cash = [[0]* (k+ 1) for _ in range(len(prices))]
+        #hold = [[0]*(k + 1) for _ in range(len(prices))]
+    
+        #cash[1] = [0] + [max(prices[1] - prices[0], 0)]*k
+        #hold[0] = [-prices[0]] * (k + 1)
+        
+        sell = [0] + [max(prices[1] - prices[0], 0)]*k
+        buy = [max(-prices[0], -prices[1])]* (k + 1)
+        
+        for i in range(1, len(prices)):
+            #hold[i][0] = max(hold[i -1][0], -prices[i])
+            buy[0] = max(buy[0], -prices[i])
+            for l in range(1, k + 1):
+                #hold[i][l] = max(hold[i -1][l], cash[i -1] [l] - prices[i])
+                #cash[i][l] = max(cash[i -1][l], hold[i -1][l -1] + prices[i])
+                buy[l] = max(buy[l], sell[l] - prices[i])
+                sell[l] = max(sell[l], buy[l -1] + prices[i])
+        #return cash[-1][k]
+        return sell[k]
