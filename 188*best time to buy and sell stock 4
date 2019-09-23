@@ -64,3 +64,8 @@ def maxProfit(self, k: int, prices: List[int]) -> int:
                 sell[l] = max(sell[l], buy[l -1] + prices[i])
         #return cash[-1][k]
         return sell[k]
+some of the top explanations are :
+https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/discuss/39608/A-clean-DP-solution-which-generalizes-to-k-transactions
+state machine:
+https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/discuss/54150/State-machine-is-the-easiest-way-to-understand-stock-problem-could-solve-all-the-stock-problem-in-leetcode
+
