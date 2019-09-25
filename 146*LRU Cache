@@ -1,0 +1,101 @@
+Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
+
+get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+put(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
+
+The cache is initialized with a positive capacity.
+
+Follow up:
+Could you do both operations in O(1) time complexity?
+
+First: implement this cache as a python orderedDict(cheating):
+from collections import OrderedDict
+class LRUCache():
+
+    def __init__(self, capacity: int):
+        
+        self.capacity = capacity
+
+    def get(self, key: int) -> int:
+        if key not in self:
+            return -1
+        self.move_to_end(key)
+        return self[key]
+
+    def put(self, key: int, value: int) -> None:
+        if key in self:
+            self.move_to_end(key)
+        self[key] = value
+        if len(self) > self.capacity:
+            self.popitem(last = False)
+            
+  Correct: Hashmap and doubly-linked-list: if O(1) time for get: need a hashmap. If O(1) time for set, need a doubly linked list(
+  removing/adding in array needs to shift everything, in BST/heap needs to find immediate successor/shiftdown, take O(log n) time. Thus linked 
+  list seems the best choice) The important thing to realize is that the values of the hashmap should be the nodes in the linked lists, 
+  so that when we find the key in the hashmap, we can actually get to the node immediately:
+  
+  
+class Node():
+    def __init__(self, k,v):
+        self.key = k
+        self.val = v
+        self.prev = None
+        self.next = None
+        
+        
+class LRUCache():
+
+    def __init__(self, capacity: int):
+        self.dict = dict()
+        self.capacity = capacity
+        self.head = Node(float('inf'), 0)
+        self.tail = Node(0, 0)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        
+    def remove(self, node):
+        prev = node.prev
+        new = node.next
+        prev.next = new
+        new.prev = prev
+        #self.dict.pop(node.key)
+        
+    def add_to_head(self, node):
+        new = self.head.next
+        node.prev = self.head
+        node.next = new
+        self.head.next =node
+        new.prev = node
+        #self.dict[node.key] = node
+        
+        
+    def get(self, key: int) -> int:
+        if key not in self.dict:
+            return -1
+        node = self.dict[key]
+        self.remove(node)
+        self.add_to_head(node)
+        return node.val
+        
+        
+            
+        
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.dict:
+            node = self.dict[key]
+            node.val = value
+            self.remove(node)
+            self.add_to_head(node)
+        else:
+            node = Node(key, value)
+            self.add_to_head(node)
+            self.dict[key] = node
+            
+        if len(self.dict) > self.capacity:
+            node = self.tail.prev
+            self.dict.pop(node.key)
+            self.remove(node)
+        #print(list(self.dict.keys()) )  
+ 
+  
