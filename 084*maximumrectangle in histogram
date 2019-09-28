@@ -13,3 +13,55 @@ class Solution:
             stack.append(i)
         height.pop()
         return ans
+
+
+#my thought: consider the pair given by left, right pointer, then dp[l][r] is determined by the min of the bars inside:
+so dp[l][r] can be reduced from dp[l+ 1][r] and dp[l][r + 1], later I realized that since the length is the part we care thus we only need
+to maitain a gradually shrinking dp array from length of the numbers to 1. But this is still O(n^2) time because we are considering pairs. 
+Anyhow, I think it is worth writing down:
+
+if not height:
+            return 0
+        
+        ans = 0
+        dp = [(height[i], height[i]) for i in range(len(height))]
+        ans = max(p[0] for p in dp)
+        for l in range(1,len(height)):
+            B = [(0,0)]* (len(height) - l)
+            for i in range(len(height) - l):
+                #h1 = min(height[i], dp[i + 1][i + l][1])
+                h1 = min (height[i], dp[i + 1][1])
+                h2 = min(height[i + l],dp[i][1] )
+                
+                
+                #dp[i][i + l] = ( max(h1, h2) * (l + 1) , max(h1, h2) )
+                B[i] = ( max(h1, h2) * (l + 1) , max(h1, h2) )
+            ans = max(max(b[0] for b in B), ans)
+                
+            dp = B
+        #print(dp)
+        return ans
+Nice solution in here:        
+https://leetcode.com/problems/largest-rectangle-in-histogram/discuss/28963/Python-solution-without-using-stack.-(with-explanation)
+def largestRectangleArea(self, heights: List[int]) -> int:
+        n = len(heights)
+        left = [1]*n
+        right = [1]*n
+        
+        for i in range(1,n):
+            j = i - 1
+            while j>=0 and heights[j] >= heights[i]:
+                j -= left[j]
+            left[i] = i - j
+             
+        for i in range(n-2,-1,-1):
+            j = i + 1
+            while j < len(heights) and heights[i] <= heights[j]:
+                j += right[j] 
+            right[i] = j - i
+            
+        res = 0
+        for i in range(n):
+            res = max(res,heights[i]*(left[i]+right[i]-1))
+                
+        return res
