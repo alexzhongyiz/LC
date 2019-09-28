@@ -12,9 +12,23 @@ def missingWords(s, t):
             pointer += 1
         longer.pop(pointer)
     return " ".join(longer)
+ or this:
+ 
+ def missingwords(s, t):
+    p = 0
+    ans = []
+    longer = s.split(" ")
+    shorter = t.split(" ")
+    for q in range(len(shorter)):
+        target = shorter[q]
+        while target != longer[p]:
+            ans.append(longer[p])
+            p += 1
+        p += 1
+    ans.extend(longer[p:])
+    return " ".join(ans)
     
-    
-    substring:#one pass, seems to be okay
+substring:#one pass, seems to be okay
     
     def findsubStrings(s):
     Vowel = set('aeiou')
