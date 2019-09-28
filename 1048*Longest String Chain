@@ -39,3 +39,30 @@
                 if s in d:
                     dp[i] = max(dp[i], dp[d[s][0]]+1)
         return max(dp)
+        
+        
+Best result in second attempt:
+
+def longestStrChain(self, words):
+        words.sort(key = len)
+        
+        hashmap = {}
+        
+        for word in words:
+            hashmap[word] = 1
+        def ifprev(word):
+            ans = []
+            for j in range(len(word)):
+                prev = word[:j]+ word[j + 1:]
+                if prev in hashmap:
+                    ans.append(prev)
+            return ans
+        ans = 1
+        
+        for i in range(len(words)):
+            prevs = ifprev(words[i])
+            if len(prevs)> 0:
+                hashmap[words[i]] = max(hashmap[prev] for prev in prevs) + 1
+                ans = max(ans, hashmap[words[i]])
+        
+        return ans
