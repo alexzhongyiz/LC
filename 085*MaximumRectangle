@@ -1,0 +1,51 @@
+Manage to do it in second thought:
+Idea is to maitain a 2-D array dp which stores the number of consecutive 1's in the same row until the current element (i,j).
+Then for each element, traverse the same column back up (k, j) for (0<=k<=i) to find the max rectangle with the current element (i, j).
+time complexity O(m^2 *n), space complexity O(mn).
+
+def maximalRectangle(self, matrix: List[List[str]]) -> int:
+       
+        if not matrix or not matrix[0]:
+            return 0
+        dp = [[0]* len(matrix[0]) for _ in range(len(matrix))]
+        ans = 0
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                if matrix[i][j] == '1':
+                    dp[i][j] = dp[i][j - 1] + 1
+                    hmin = dp[i][j]
+                    k = i
+                    while k >= 0 and dp[k][j] > 0:
+                        hmin = min(hmin, dp[k][j])
+                        ans = max(ans, hmin* (i - k + 1) )
+                        k -= 1
+                #print(i, j, dp,ans)
+        return ans
+        
+Can actually use only 1-D DP as follows; notice that now must loop through each column first:
+
+def maximalRectangle(self, matrix: List[List[str]]) -> int:
+       
+        if not matrix or not matrix[0]:
+            return 0
+        
+        dp = [0]*len(matrix)
+        ans = 0
+        for j in range(len(matrix[0])): # here j is not used again, just use _ is also ok
+            for i in range(len(matrix)):
+                if matrix[i][j] == '1':
+                    
+                    dp[i] = dp[i] + 1
+                  
+                    hmin = dp[i]
+                    k = i
+                    while k >= 0 and dp[k] > 0:
+                        hmin = min(hmin, dp[k])
+                        ans = max(ans, hmin* (i - k + 1) )
+                        k -= 1
+                else:
+                    dp[i] = 0
+                
+        return ans
+        
+ Still time complexity O(m^2 * n) there are actually better ways. see the solution.
