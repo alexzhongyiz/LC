@@ -6,7 +6,7 @@ def findCircleNum(M) -> int:
     visited = set()
     def dfs(node):
         for k in range(N):
-            dif = M[node][i]
+            dif = M[node][k]
             if dif and (k not in visited):
                 print(k)
                 visited.add(k)
@@ -19,6 +19,34 @@ def findCircleNum(M) -> int:
             ans +=1
         
     return ans 
+    
+    
+    
+What's wrong with this:
+
+class Solution:
+    visited = set()
+    def findCircleNum(self,M):
+        if not M: return 0
+        
+        def dfs(node):
+            for k in range(len(M)):
+                while M[node][k] == 1 and (k not in self.visited):
+                    #if k not in self.visited:
+                    print(self.visited, "next node: ", k)
+                    self.visited.add(k)
+                    dfs(k)
+        
+        
+        ans = 0
+        for j in range(len(M)):
+            if j not in self.visited:
+                dfs(j)
+                ans += 1
+        return ans
+                
+        
+        
 
 BFS solution:
 def findCircleNum(M):
