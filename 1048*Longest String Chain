@@ -40,8 +40,7 @@
                     dp[i] = max(dp[i], dp[d[s][0]]+1)
         return max(dp)
         
-        
-Best result in second attempt:
+Similar result in second attempt:
 
 def longestStrChain(self, words):
         words.sort(key = len)
