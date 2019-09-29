@@ -48,3 +48,74 @@ substring:#one pass, seems to be okay
         print('' ,'', sep = '\n')
     else:
         print(lowest, highest, sep = '\n')
+
+problem 1 is just to use left, right, sec_to_left, sec_to_right to keep track of the most close left/right points 
+for interpolation and in case it lies outside the range, use sec for exterpolation.
+
+problem 2 asks for 5 questions:
+1.town with most variation
+2.median of NYC when Town2 is between 90 and 100, round to the nearest integer
+3.sum of all regression coef's when doing univariate regression with different towns,not counting intercept
+4.which town has the least MSE with NYC
+5.which two towns has the least MSE when OLS with NYC
+
+I passed 2/12. Had no idea where the other parts are wrong.
+
+Q1= df.std(axis = 0).idmax()
+
+t2gt90 = df['Town2'] >=90
+t2lt100 = df['Town2'] <=100
+Q2 = str(int(round(df[t2gt90 & t2lt100].NYC.median())) )
+
+coef_sum = 0
+lowest_mse = float('inf')
+most_relevant = len(col_names) #here should not have used -1, only increased the difficulty of debugging!!!!
+
+y = df['NYC'].values.reshape(-1,1)
+
+for p in range(len(col_names)- 1):
+    X = df[[col_names[p]]].values.reshape(-1,1)
+    lm = LinearTegression()
+    lm.fit(X,y)
+    
+    cur_mse = mean_squared_error(y, lm.predict(X))
+    if cur_mse < lowest_mse:
+        lowest_mse = cur_mse
+        most_relevant = col_names[p]
+    coef_sum += np.sum( np.absolute(lm.coef_))
+Q3 = coef_sum
+Q4 = most_relevant
+
+low_mse2 = float("inf")
+most_two_towns = N, N ##should not have used -1,-1
+for i in range(len(col_names) - 2):
+    for j in range(i + 1, len(col_names)- 1):
+        lm2 = LinearRegression()
+        X = df[[col_names[i], col_names[j]]]
+        lm2.fit(X, y)
+        cur_mse = mean_squared_error(y,lm2.predict(X))
+        if cur_mse < low_mse2:
+            low_mse2 = cur_mse
+            most_two_towns = i, j
+Q5 = col_names[i], col_names[j]
+
+return ",".join([Q1, Q2, Q3, Q4, Q5[0], Q5[1]])
+         
+
+
+problem 3 is something like this:
+
+import statsmodels.api as sm
+
+X = df[['T1', 'T2']]
+y = df[['NYC']]
+X_1 = sm.add_constant(X)
+model = sm.OLS(y,X_1).fit()
+pvalues = model.pvalues
+pvalues.sort_values()
+constindex = list(pvalues.index).index('const')
+if constindex <=4:
+    return list(pvalues.index).pop(constindex)[:5]
+else:
+    return pvalues.index[:5]
+",".join(pvalues.index[1:6])
