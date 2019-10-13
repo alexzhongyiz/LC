@@ -17,7 +17,8 @@ def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[Lis
         #Yet if I change tue above sums to a set and then change it to a list and then heapify. it works
         note that if we push every element one by one takes O(NlogN) time to get a heap. Yet it only takes O(2N) time
         to do heapify
-        
+  
+  
  #or I can use heapq.nsmallest(k, list, key = fun) to run a one_liner:
  def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:
         return heapq.nsmallest(k, [[a, b] for a in nums1 for b in nums2], key = sum)
