@@ -1,0 +1,39 @@
+Python 1-liner:
+class Solution:
+    def flipAndInvertImage(self, A: List[List[int]]) -> List[List[int]]:
+        return [[i^1 for i in A[row][::-1] ] for row in range(len(A))]
+        
+ C++:
+ my first approach: notice can't do result[i][j] = ... because result is not a list/dictionary and thus can't have index. 
+ class Solution {
+public:
+    vector<vector<int>> flipAndInvertImage(vector<vector<int>>& A) {
+        vector<vector<int>> result;
+        for (int i = 0; i < A.size(); i++){
+            vector<int> row;
+            for (int j = 0; j < A[i].size(); j++){
+                row.push_back(A[i][A[i].size() -1 - j]^1);
+            }
+            result.push_back(row);
+        }
+        return result;
+    }  
+};
+
+Better C++ using std::reverse (can omit the std:: if include namespace std before, as is assumed in leetcode)
+
+class Solution {
+public:
+    vector<vector<int>> flipAndInvertImage(vector<vector<int>>& A) {
+        for (auto && row :A){
+            std::reverse(row.begin(), row.end());
+            for (auto && elem : row){//this can be done using lambda expressions
+                elem = elem^1;
+            }
+        }
+        return A;
+    }  
+};
+
+
+
