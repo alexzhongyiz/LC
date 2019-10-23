@@ -27,7 +27,7 @@ public:
     vector<vector<int>> flipAndInvertImage(vector<vector<int>>& A) {
         for (auto && row :A){
             std::reverse(row.begin(), row.end());
-            for (auto && elem : row){//this can be done using lambda expressions
+            for (auto && elem : row){//another way for this below
                 elem = elem^1;
             }
         }
@@ -35,5 +35,16 @@ public:
     }  
 };
 
+this can be done using lambda expressions
 
+class Solution {
+public:
+    vector<vector<int>> flipAndInvertImage(vector<vector<int>>& A) {
+        for (auto && row :A){
+            std::reverse(row.begin(), row.end());
+            std::for_each(row.begin(), row.end(), [](int & elem){elem = elem^1;});
+        }
+        return A;
+    }  
+};
 
