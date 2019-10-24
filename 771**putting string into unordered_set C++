@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int numJewelsInStones(string J, string S) {
+    
+        unordered_set<char> Jew(J.begin(),J.end()); //use iterators to initialize an unordered_map.
+        
+        int cnt =0;
+        for (const char &s : S){
+            if (Jew.find(s)!=Jew.end())cnt++; //if change the condition to if(Jew.count(s)) would give 0 ms!
+        }
+        return cnt;
+    }
+};
+
+someone else's solutions using vector:
+class Solution {
+public:
+    int numJewelsInStones(string J, string S) {
+        vector<int> map(128, 0);
+        int res =0;
+        for (const char & c: J) map[c]++;
+        for (const char &s: S) {
+            if (map[s]) res++;
+        }
+        return res;
+    }
+};
+
+or a more slick solution:
+
+class Solution {
+public:
+    int numJewelsInStones(string J, string S) {
+        map<char, int> map;
+        for (auto &s: S){
+            map[s]++;
+        }
+        int res = 0;
+        for (auto &j : J) res += map[j];
+        return res;
+    }
+};
+
