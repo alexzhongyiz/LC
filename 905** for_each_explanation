@@ -1,0 +1,136 @@
+C++ trial:
+
+//why this gives error for lambda function:
+
+vector<int> &even = for_each(A.begin(), A.end(), [](int &item)
+        {
+            if (item%2 == 0){
+                return item;
+            }   
+        });
+//Because for_each(first_iter, last_iter; fn) returns the function fn, not a vector.
+//The correct way is:
+
+vector<int> res = {};
+for_each(A.begin(), A.end(), [&](int &item) //here the & means we take the reference of all outside variables, for our purpose res.
+        {
+            if (item%2 == 0){
+                res.insert(res.end(), item);
+            }   
+        });
+  
+  
+//But why the following would fail:
+       
+for_each(A.begin(), A.end(), [&](int *ptr){
+            if (*ptr %2 == 1){
+                res.insert(res.end(), *ptr);
+            }
+        });
+        
+
+//Because the function for_each() is equivalent to the following: http://www.cplusplus.com/reference/algorithm/for_each/
+//the important piece of code is here:
+
+template<class InputIterator, class Function>
+  Function for_each(InputIterator first, InputIterator last, Function fn)
+{
+  while (first!=last) {
+    fn (*first);
+    ++first;
+  }
+  return fn;      // or, since C++11: return move(fn);
+}
+
+// NOTICE the line fn(*first) so fn take in the VALUE or the REFERENCE, not a POINTER.
+
+
+        
+//the following works:
+
+note: vector<int> &res; or vector<int> &res = {}; are invalid initializations in C++.
+The first is because reference can't be dangling; the second is due to lvalue/rvalue where we should just to lvalue reference(rvalue 
+vanishes after the expression terminates,namely after the semi colon. 1279; {1,2, 3}, 
+https://stackoverflow.com/questions/8293426/error-invalid-initialization-of-non-const-reference-of-type-int-from-an-rval
+
+However; it seems that in C++ 11, you can do vector<int> && res = {} for rvalue reference:
+https://stackoverflow.com/questions/4549151/c-double-address-operator
+ 
+My first idea: two pass, extra space:
+class Solution {
+public:
+    vector<int> sortArrayByParity(vector<int>& A) {
+        vector<int> res = {};
+        for (const auto&item : A){
+            if (item%2 == 0){
+                res.insert(res.end(),item);
+            }
+        }
+                
+        for (const auto&item: A){
+            if (item%2 ==1){
+                res.insert(res.end(), item);
+            }
+        }
+        
+        
+        return res;
+    }
+};
+Second idea uses the fact that you can initialize a vector by first giving it a size and put everything to 0 and then change the value
+based on the index:
+
+class Solution {
+public:
+    vector<int> sortArrayByParity(vector<int>& A) {
+        int size = A.size();
+        vector<int> res(size, 0);
+        int left = 0, right = size - 1;
+        for (int i = 0; i< size; i++){
+            if (A[i]%2 ==0){
+                res[left++]= A[i];
+            }
+            else{
+                res[right--] = A[i];
+            }
+        }
+        
+        return res;
+    }
+};
+
+Third idea: swapping in-place:
+
+vector<int> sortArrayByParity(vector<int>& A) {
+        int size = A.size();
+        int i =0, j = size - 1;
+        while (i < j){
+            if (A[i]%2 == 0){i++;}
+            else if (A[j]%2 == 1){j--;}
+            else{
+                int temp = A[i];
+                A[i] = A[j];
+                A[j] = temp;
+            }
+        }
+        return A;
+    }
+    
+    
+4th method: using for loop with comma in initialization:
+
+class Solution {
+public:
+    vector<int> sortArrayByParity(vector<int>& A) {
+        
+        for (int i =0, j = 0; j< A.size(); j++){
+            if (A[j]%2 ==0){
+                int temp = A[i];
+                A[i++] = A[j];
+                A[j] = temp;
+            }
+        }
+        return A;
+    }
+};
+
