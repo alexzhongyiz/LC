@@ -4,6 +4,8 @@ class Solution:
         return [[i^1 for i in A[row][::-1] ] for row in range(len(A))]
         
  C++:
+ 
+ 
  my first approach: 
  class Solution {
 public:
@@ -39,7 +41,7 @@ public:
 
 
 Better C++ using std::reverse (can omit the std:: if include namespace std before, as is assumed in leetcode)
-
+NOTE: using auto instead of a complex denoter like string::iterator can greatly reduce computing speed.
 class Solution {
 public:
     vector<vector<int>> flipAndInvertImage(vector<vector<int>>& A) {
