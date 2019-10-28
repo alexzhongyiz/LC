@@ -1,0 +1,111 @@
+other's code using partial sort:
+
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+       partial_sort(points.begin(), points.begin() + K, points.end(), [](vector<int>&a, vector<int>&b){
+           return a[0]*a[0] + a[1]*a[1] < b[0]*b[0] + b[1]*b[1];
+       });
+       return vector<vector<int>>(points.begin(), points.begin()+ K); 
+    }
+};
+
+Why the following gives error: invalid use of non-static member function bool:
+
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+       partial_sort(points.begin(), points.begin() + K, points.end(), cmp);
+       return vector<vector<int>>(points.begin(), points.begin()+ K); 
+    }
+private:
+    bool cmp(vector<int>&a, vector<int>&b){
+        return a[0]*a[0] + a[1]*a[1] < b[0]*b[0] + b[1]*b[1];
+    }
+};
+
+达哥解释：调用 partial_sort 的时候，是不会根据某一个具体的Solution类型变量来选择调用哪个cmp或者operator()函数，
+而是应该调用Solution这一类的这个函数，也就是这个函数在调用的时候应该跟具体是哪个Solution变量无关
+可以把你第一个程序改成 static bool cmp(vector<int> a, vector<int> b)，也OK了。
+最好写成static bool cmp(const vector<int>& a, const vector<int>& b)。
+
+it turns out making the cmp function static does make sense:
+
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+        partial_sort(points.begin(), points.begin() + K, points.end(), cmp);
+       return vector<vector<int>>(points.begin(), points.begin()+ K); 
+    }
+private:
+      static bool cmp (const vector<int>&a, const vector<int>&b){
+                  return a[0]*a[0] + a[1]*a[1] < b[0]*b[0] + b[1]*b[1];
+      }
+ 
+};
+
+https://stackoverflow.com/questions/1902311/problem-sorting-using-member-function-as-comparator says
+I need to overload the operator () in Solution class
+
+class Solution {
+public:
+    bool operator() (vector<int>a, vector<int>b){
+        return a[0]*a[0] + a[1]*a[1] < b[0]*b[0] + b[1]*b[1];
+    }
+    
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+       partial_sort(points.begin(), points.begin() + K, points.end(), *this);
+       return vector<vector<int>>(points.begin(), points.begin()+ K); 
+    }
+    
+};
+
+or make a new struct that includes an instance of Solution class:
+
+
+class Solution {
+public:
+    struct cmp{
+        cmp(Solution &s): sol(s){}
+        Solution &sol;
+        bool operator() (vector<int>a, vector<int>b){
+            return a[0]*a[0] + a[1]*a[1] < b[0]*b[0] + b[1]*b[1];
+        }
+    };
+    
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+       partial_sort(points.begin(), points.begin() + K, points.end(), cmp(*this));
+       return vector<vector<int>>(points.begin(), points.begin()+ K); 
+    }
+    
+};
+
+WHAT IS wrong with the following code (no matching function for call to 'std::vector<int>::push_back(const value_type&)'
+             ans.push_back(pq.top()); ): 
+ANSWER:            
+THE TYPE OF THE VARIABLE ans is vector<vector<int>> not vector<int>!!!!!
+
+class Solution {
+public:
+    struct cmp{
+        
+        bool operator() (vector<int>&a, vector<int>&b){
+            return a[0]*a[0] + a[1]*a[1] > b[0]*b[0] + b[1]*b[1];
+        }
+    };
+    
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+       priority_queue<vector<int>, vector<vector<int>>, cmp> pq(points.begin(), points.end());
+        //vector<int> ans; WRONG!!!
+        vector<vector<int>> ans;
+        for(int s= 0; s<K; s++ ){
+            ans.push_back(pq.top());
+            pq.pop();
+        }
+        
+        return ans;
+    }
+    
+};
+
+
