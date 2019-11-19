@@ -1,0 +1,35 @@
+my first solution (using flag and stack):
+//when we meet an outmost "(", set flag to 1 then use stack to keep track of inner '('s.
+
+class Solution {
+public:
+    string removeOuterParentheses(string S) {
+        int flag = 0;
+        string res = "";
+        stack<char> stack;
+        for (const char s: S){
+            if (s == '(') {
+                if (flag ==0)flag = 1;
+            
+                else {res.push_back(s);
+                     stack.push(s);}
+                
+            }
+            else {
+                if (!stack.empty()){
+                    res.push_back(s);
+                    stack.pop();
+                }
+                else{
+                    flag = 0;
+                }   
+            
+                
+            }
+        }
+        return res;
+    }
+};
+
+//this code is amazing:
+https://leetcode.com/problems/remove-outermost-parentheses/discuss/270022/JavaC%2B%2BPython-Count-Opened-Parenthesis
