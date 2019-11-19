@@ -1,0 +1,25 @@
+My solution:
+
+class Solution {
+public:
+    string toLowerCase(string str) {
+        string res;
+        for (auto const &s : str){
+            res.push_back(tolower(s));
+            
+        }
+        return res;
+    }
+};
+
+Without using tolower():
+
+class Solution {
+public:
+    string toLowerCase(string str) {
+        for(auto & s in str){
+        if (s <='Z' && s>='A') s+= 32;
+        }
+        return str;
+    }
+};
