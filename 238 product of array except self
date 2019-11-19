@@ -1,0 +1,41 @@
+my first solution that is O(n) Time and O(n) Space:
+
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        
+        vector<int> left {1};
+        deque<int> right {1};
+        int cum_prod_l = 1, cum_prod_r = 1;
+        int n = nums.size();
+        vector<int> res;
+        
+        for (int l = 0; l< n - 1; l++){
+            cum_prod_l *= nums[l];
+            left.push_back(cum_prod_l);
+            
+        }
+       /* for (auto ptr = left.begin(); ptr < left.end(); ptr++){
+            cout<<*ptr<<" ";
+        }
+        cout<<'\n';
+        */
+        for (int r = n-1; r>0; r--){
+            cum_prod_r *= nums[r];
+            right.push_front(cum_prod_r);
+        }
+        /*
+        for (auto ptr = right.begin(); ptr < right.end(); ptr++){
+            cout<<*ptr<<" ";
+        }
+        */
+        for (int i = 0; i < n; i++){
+            res.push_back(left[i]* right[i]);
+        }
+        
+        return res;
+    }
+    
+};
+
+The O(1) space solution is a slick variation of the previous one.
