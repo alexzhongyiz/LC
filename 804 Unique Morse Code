@@ -1,0 +1,29 @@
+//my first solution:
+
+class Solution {
+public:
+    int uniqueMorseRepresentations(vector<string>& words) {
+        string dic[] = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
+        unordered_set<string> seen;
+        int count =0;
+        for (string word: words){
+            string code = "";
+            for (auto itr = word.begin(); itr!= word.end(); itr++){
+                code += dic[*itr - int('a')];
+            }
+            //for (const auto & ch : word){
+            //    code += dic[ch - 'a'];
+            //}
+            if (seen.find(code)== seen.end()){
+                count++;
+                seen.insert(code);
+            }
+        }
+        return count;
+    }
+};
+
+The last few steps can be done using seen.size() as follows:
+seen.insert(code);
+
+return seen.size();
