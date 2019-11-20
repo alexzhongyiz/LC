@@ -1,0 +1,29 @@
+// My solution, doesn't work: Line 789: Char 17: runtime error: reference binding to null pointer of type 'struct vector' (stl_iterator.h)
+class Vector2D {
+public:
+    Vector2D(vector<vector<int>>& v) {
+        
+        ptr, end = v.begin(), v.end();
+        int_ptr = (*ptr).begin();
+        //int_ptr = ptr->begin();
+    }
+    int next() {
+       return *int_ptr++; //Need to have hasNext() before this line.
+    }
+    
+    bool hasNext() {
+        //if ((int_ptr +1) == (*ptr).end() && (ptr+1) == end) {return false;}
+        //else return true;
+        while (int_ptr == ptr->end() && ptr != end ){
+            ptr++;
+            int_ptr = ptr->begin(); //need to use if(ptr!=end) then implement this line.
+        }
+        return ptr!=end;
+            
+        }
+    
+private:
+    vector<vector<int>>::iterator ptr, end;
+    vector<int>::iterator int_ptr;
+    
+};
