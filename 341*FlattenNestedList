@@ -1,0 +1,40 @@
+#my first trial: seems to get error in memory:
+
+
+class NestedIterator {
+private:
+    vector<NestedInteger>::iterator ptr;
+    vector<NestedInteger>::iterator end;
+    
+public:
+    NestedIterator(vector<NestedInteger> &nestedList) {
+        ptr = nestedList.begin();
+        end = nestedList.end();
+    }
+
+    int next() {
+        hasNext();
+        //cout<<ptr->getInteger()<<" "; //this tells us in the case of [[1,1],2], hasNext can't go to 2.
+        return (ptr++)->getInteger();
+            
+        
+           
+    }
+
+    bool hasNext() {
+        if(ptr->isInteger()) {
+            
+            return true;
+        }
+        while (!ptr->isInteger() &ptr!=end){
+            ptr = ptr->getList().begin();
+        }
+        if (ptr->isInteger())return true;
+        else return false;
+        
+    }
+};
+
+
+The following link is great:
+https://leetcode.com/problems/flatten-nested-list-iterator/discuss/80234/Evolve-from-intuition-to-optimal-a-review-of-top-solutions
