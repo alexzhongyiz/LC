@@ -1,0 +1,29 @@
+Monotonic stack method:
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int res =0;
+        stack<int> stack;
+        stack.push(INT_MIN);
+        for (int p: prices){
+            while( stack.top() > p ){
+                int cur_high = stack.top(), cur = stack.top();
+                while( stack.size() > 1){
+                    cur = stack.top();
+                    stack.pop();
+                }
+                res += cur_high - cur;
+            }
+            stack.push(p);
+        }
+        int cur_high = stack.top(), cur = stack.top();
+        while (stack.top()!= INT_MIN){
+            cur = stack.top(),
+            stack.pop();
+        }
+        res +=  cur_high - cur;
+        return res;
+    }
+};
+
