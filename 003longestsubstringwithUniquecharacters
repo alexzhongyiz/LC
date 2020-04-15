@@ -16,3 +16,25 @@ class Solution:
 
         return maxLength
         #above was a standard answer.
+c++ my slow solution:
+int lengthOfLongestSubstring(string s) {
+        int start = 0;
+        int res =0;
+        map<char, int> maps;
+        for (int i = 0; i< s.length(); i++){
+            if (maps.find(s[i]) != maps.end() ) {
+                start = max(maps[s[i]] + 1, start);
+                for (char ch = 'a'; ch <='z'; ch ++){
+                    if (maps.find(ch)!= maps.end() && maps[ch] <= maps[s[i]]){
+                        maps.erase(ch);
+                    }
+                }
+                
+                
+            }
+            res = max(res, i - start + 1);
+            maps[s[i]] = i;
+            //cout<<"step "<<i<<" res: "<<res<<" start:"<<start<<endl;
+        }
+        return res;
+    }
