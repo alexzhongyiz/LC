@@ -82,3 +82,5 @@ public:
         }
         return just_rotten;
     }
+#Actually pair takes too long time, using vector<int> and bfs would be better. 
+https://leetcode.com/problems/rotting-oranges/discuss/241139/C%2B%2B-super-easy-and-clean-solution-beats-100-time-and-100-space!
