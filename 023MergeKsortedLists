@@ -40,3 +40,111 @@ def mergeKLists(self, lists: List[ListNode]) -> ListNode:
             node = node.next
 
         return dummy.next
+        
+        
+C++ slow method O(kN)
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+  //      for (auto ptr = lists.begin(); ptr!= lists.end(); ptr++){
+  //          if (!*ptr) lists.erase(ptr);
+  //      }
+    //the above is invalid because if we erase the ptr from lists, then we can't go further in our traversal.
+    //this is the motto that we shouldn't modify a list during traversal.
+        
+        //cout<<lists.size();
+        ListNode *head = new ListNode();
+        ListNode *cur = head;
+        while (!lists.empty()){
+            int cur_min = INT_MAX;
+            int small_ind = -1;
+            for (int i = 0; i< lists.size(); i++){
+                if (lists[i] && lists[i]->val < cur_min){
+                    small_ind = i;
+                    cur_min = lists[i]->val;
+                }
+            }
+            if (small_ind == -1) break;
+            cur -> next = lists[small_ind];
+            cur = cur->next;
+            if (lists[small_ind]->next){
+                lists[small_ind] = lists[small_ind] -> next;
+            }
+            else{
+                lists.erase(lists.begin()+ small_ind);
+            }
+            
+            //else lists.erase(cand);
+            
+        }
+        return head ->next;
+    }
+};
+
+
+Using priority_queue in C++:
+Note here we need to define our own compare operator on the class ListNode so that later we can build a priority_queue of type ListNode.
+
+
+struct compare{
+        public: bool operator() (const ListNode * l1, const ListNode *l2){
+            return l1->val > l2->val;
+        }
+    };
+    
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+        ListNode *head = new ListNode();
+        ListNode *cur = head;
+        priority_queue<ListNode*, vector<ListNode*>, compare > pq;
+        for (auto l : lists){
+            if (l){
+               pq.push(l);
+            }   
+        }
+        
+        while (!heap.empty()){
+            //cout<< heap.top()->val;
+            cur ->next = pq.top();
+            pq.pop();
+            cur = cur->next;
+            if (cur ->next ) pq.push(cur->next);
+        }
+        return head -> next;
+    }
+};
+
+Or we could using heap in C++, implementation not quite the same with priority_queue:
+class Solution {
+public:
+    static bool heapcomp(ListNode *l, ListNode * r){
+        return l->val > r->val;
+    }
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        
+        ListNode *head = new ListNode();
+        ListNode *cur = head;
+        //priority_queue<ListNode*, vector<ListNode*>, compare > heap;
+        vector<ListNode*> v;
+        for (auto l : lists){
+            if (l){
+                v.push_back(l);
+            }   
+        }
+        make_heap(v.begin(), v.end(), heapcomp);
+        
+        while (!v.empty()){
+            //cout<< heap.top()->val;
+            cur ->next = v.front();
+            pop_heap(v.begin(), v.end(),heapcomp);
+            v.pop_back();
+            //note pop_heap doesn't remove the elements from the heap. What it does (assuming of course that [begin, end) forms a valid, non-empty heap) is rearrange the elements such that the first element of the heap moves to be the last element of the range, and leaves [begin, end-1) as a valid heap. If you want to actually remove the element from the container, you just have to erase the last element of the container (e.g. with a call to pop_back()) after you call pop_heap.
+            cur = cur->next;
+            if (cur ->next ) {
+                v.push_back(cur->next);
+                push_heap(v.begin(), v.end(), heapcomp);
+                // Similar to before, push_heap(first, last) do the following: Push element into heap range Given a heap in the range [first,last-1), this function extends the range considered a heap to [first,last) by placing the value in (last-1) into its corresponding location within it.
+            }
+        }
+        return head -> next;
+    }
+};
