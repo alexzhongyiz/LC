@@ -1,0 +1,84 @@
+my first C++ attempt: very slow O(R^2C^2) time complexity.
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+       int R = grid.size(), C = grid[0].size();
+        if (R == 0 || C == 0)return -1;
+        
+        //int N = 2* (R + C - 2);
+        int N = R*C;
+        for (int i =0; i< N + 1; i++){
+            vector<pair<int, int>> fresh, rotten;
+            for (int r =0; r< R; r++){
+                for (int c= 0; c < C; c++){
+                    if (grid[r][c] == 1) fresh.push_back(make_pair(r,c));
+                    if (grid[r][c] == 2) rotten.push_back(make_pair(r,c)); 
+                }  
+            }
+            if (fresh.empty()) return i;
+                for (auto coor : rotten){
+                    affect(grid, coor.first, coor.second, R, C);
+                }     
+        } return -1;
+    }
+    void affect(vector<vector<int>>& grid, int r, int c, int R, int C){
+        if (r>0 && grid[r-1][c] == 1) grid[r -1][c] =2;
+        if (r<R -1 && grid[r + 1][c] == 1) grid[r+ 1][c] = 2;
+        if (c > 0 && grid[r][c - 1] == 1) grid[r][c - 1] = 2;
+        if (c < C - 1 && grid[r][c + 1] == 1) grid[r][c + 1] = 2;
+    }
+};
+
+better method:
+Here we need to declare an unordered_set of datatype pairs<int, int>, which does not have a hash function of its own. Thus we need to 
+define the hashfunction first.
+For ordered set this wouldn't be a problem as sets store keys using operator < , which is defined for pairs with lexicographical order.
+More explanations and options: https://www.techiedelight.com/use-pair-key-std-unordered_set-cpp/
+
+public:
+    struct pair_hash{
+	template <class T1, class T2>
+	std::size_t operator () (std::pair<T1, T2> const &pair) const
+	{
+		std::size_t h1 = std::hash<T1>()(pair.first);
+		std::size_t h2 = std::hash<T2>()(pair.second);
+
+		return h1 ^ h2;
+	}
+};
+    
+    int orangesRotting(vector<vector<int>>& grid) {
+       int R = grid.size(), C = grid[0].size();
+        if (R == 0 || C == 0)return -1;
+        
+        //int N = 2* (R + C - 2);
+        int N = R*C;
+        
+        unordered_set<pair<int, int>, pair_hash> fresh, rotten; //pair_hash is needed here.
+        for (int r =0; r< R; r++){
+                for (int c= 0; c < C; c++){
+                    if (grid[r][c] == 1) fresh.insert(make_pair(r,c));
+                    if (grid[r][c] == 2) rotten.insert(make_pair(r,c)); 
+                }  
+            }
+        for (int i =0; i< N + 1; i++){
+            if (fresh.empty()) return i;
+                unordered_set<pair<int, int>, pair_hash> Rotten_at_step;
+                for (auto coor : rotten){
+                    vector<pair<int, int>> just_rotten = affect(coor.first, coor.second, R, C, fresh);
+                    Rotten_at_step.insert(just_rotten.begin(), just_rotten.end() );
+                }  
+                rotten = Rotten_at_step;
+        } return -1;
+    }
+    vector<pair<int, int>> affect( int r, int c, int R, int C, unordered_set<pair<int, int>, pair_hash> &fresh ){
+        vector<pair<int, int>> just_rotten; 
+        vector<pair<int, int>> dirs {make_pair(r -1, c), make_pair(r + 1, c), make_pair(r, c - 1), make_pair(r, c + 1)};
+        for (auto dir : dirs){
+            if (dir.first > -1 && dir.first< R  && dir.second > -1 && dir.second < C && fresh.find(dir) != fresh.end()){
+                just_rotten.push_back(dir);
+                fresh.erase(dir);
+            }
+        }
+        return just_rotten;
+    }
