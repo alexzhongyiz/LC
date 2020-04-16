@@ -30,6 +30,8 @@ recursion:
         else:
             cur.next = l1
         return prevhead.next
+        
+C++:        
 ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
         
         //ListNode *head = new ListNode(-1);
@@ -38,7 +40,7 @@ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
         //because head is not a function.
         //instead, use ListNode *h = new ListNode() or ListNode *h = new ListNode(-1)
         //similarly, when initilizing a struct, not ListNode h(-1) but ListNode h = ListNode(-1); or ListNode h = ListNode()
-        ListNode * cur = &head;
+        ListNode * cur = &head; // ListNode * cur = head if head were declared as a pointer to ListNode.
         
         while (l1!= NULL || l2!= NULL){
             
