@@ -1,0 +1,113 @@
+The key is the hash map, we just need to use modulo a large prime number will be fine.
+
+My C++ code:
+
+class MyHashMap {
+public:
+    /** Initialize your data structure here. */
+    MyHashMap() {
+        hash_table.resize(hash_size);
+        
+    }
+    
+    /** value will always be non-negative. */
+    void put(int key, int value) {
+        int hash_key = key % hash_size;
+        bool found = false;
+        for (auto iter = hash_table[hash_key].begin();iter!=hash_table[hash_key].end(); ++ iter){
+            if (iter ->first == key){
+                found = true;
+                iter -> second = value;
+                break;
+            }
+        }
+        if (!found){
+            hash_table[hash_key].push_back(std::make_pair(key,value));
+        }
+    }
+    
+    /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
+    int get(int key) {
+        int hash_key = key % hash_size;
+        for (auto iter = hash_table[hash_key].begin();iter!=hash_table[hash_key].end(); ++ iter){
+            if (iter->first == key){
+                return iter ->second;
+            }
+        }
+        return  -1;
+            
+    }
+    
+    /** Removes the mapping of the specified value key if this map contains a mapping for the key */
+    void remove(int key) {
+        int hash_key = key % hash_size;
+        for (auto iter = hash_table[hash_key].begin();iter!=hash_table[hash_key].end(); ++ iter){
+           if (iter ->first == key){
+                hash_table[hash_key].remove(*iter); 
+                break;
+           }
+        }
+    }
+private:
+    int hash_size = 2069;
+    std::vector<std::list<std::pair<int,int>>> hash_table;    
+};
+
+==================================The standard solution using python 3==========================
+class Bucket:
+    def __init__(self):
+        self.bucket = []
+        
+    def get(self,key):
+        for k, v in self.bucket:
+            if key == k:
+                return v
+        return -1
+    
+    def update(self,key, value):
+        found = False
+        for i, kv in enumerate(self.bucket):
+            if key == kv[0]:
+                self.bucket[i] = (key,value)
+                found = True
+                break
+        if not found:
+            self.bucket.append((key,value))
+            
+    def remove(self, key):
+        for i,kv in enumerate(self.bucket):
+            if key == kv[0]:
+                del self.bucket[i]
+
+class MyHashMap:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.size = 2069
+        self.hash_table = [Bucket() for i in range(self.size)]
+        
+
+    def put(self, key: int, value: int) -> None:
+        """
+        value will always be non-negative.
+        """
+        hash_idx = key % self.size
+        self.hash_table[hash_idx].update(key,value)
+        
+
+    def get(self, key: int) -> int:
+        """
+        Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key
+        """
+        hash_idx = key % self.size
+        return self.hash_table[hash_idx].get(key)
+
+    def remove(self, key: int) -> None:
+        """
+        Removes the mapping of the specified value key if this map contains a mapping for the key
+        """
+        hash_idx = key % self.size
+        self.hash_table[hash_idx].remove(key)
+
