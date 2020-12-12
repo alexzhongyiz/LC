@@ -1,0 +1,46 @@
+1 <= nums.length <= 5 * 10^4
+1 <= nums[i] <= 10^6
+nums.length <= threshold <= 10^6
+
+initial OT solution:
+
+class Solution {
+public:
+    int smallestDivisor(vector<int>& nums, int threshold) {
+        int sum = std::accumulate(nums.begin(),nums.end(),0);
+        int lower_bound = int((sum -1) / threshold) + 1;
+        for(int div = lower_bound; ; ++div){
+            sum = std::accumulate(nums.begin(), nums.end(), 0, [&](int j, int i){return j + int((i -1)/div) + 1;});
+            if (sum <= threshold){
+                return div;
+            }
+        }
+        
+    }
+};
+
+class Solution {
+public:
+    int smallestDivisor(vector<int>& nums, int threshold) {
+        //the following line is commented out due to the numbers are too large and exceed the bits for int.
+        //long long int sum = std::accumulate(nums.begin(),nums.end(),0);
+        //int lower_bound = int((sum -1) / threshold) + 1;
+        int upper_bound = *std::max_element(nums.begin(), nums.end());
+        int l = 1; 
+        int r = upper_bound;
+        
+        while (l <= r){
+            int m = (l + r)/2;
+            int sum = std::accumulate(nums.begin(),nums.end(),0,[&](long int a, long int b){return a + (b-1)/m + 1;});
+            
+            if (sum > threshold){
+                l = m + 1;
+            }
+            else{
+                r = m -1;
+            }
+        }
+        return l;
+        
+    }
+};
