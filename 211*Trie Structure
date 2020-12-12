@@ -1,0 +1,86 @@
+idea using hash table:
+
+class WordDictionary {
+public:
+    /** Initialize your data structure here. */
+    WordDictionary() {
+        
+        
+    }
+    
+    void addWord(string word) {
+        dic[word.length()].insert(word);
+        
+    }
+    
+    bool search(string word) {
+        size_t m = word.length();
+        for (auto dict_word : dic[m]){
+            int i = 0;
+            while(i<m){
+                if(dict_word[i] == word[i] || word[i] == '.'){
+                    i++;
+                }
+                else break;
+            }
+            if (i == m) return true;
+        }
+        return false;
+    }
+private: std::unordered_map<int,std::set<string>> dic;
+};
+
+
+Using Trie structure:
+
+class WordDictionary:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.trie = {}
+        
+
+    def addWord(self, word: str) -> None:
+        node = self.trie
+        for ch in word:
+            if ch not in node:
+                node[ch] = {}
+            
+            node = node[ch]
+        node['#'] = True
+        
+#Below I use vanilla verion (no wildcard '.' yet, just plain search word)
+    def search(self, word: str) -> bool:
+        node = self.trie
+        for i,ch in enumerate(word):
+            if ch not in node:
+                return False
+            node = node[ch]
+        if "#" not in node:
+            return False
+        else return True
+        
+For this problem, the search function can be done using dfs:
+
+def search_dfs(self,word, node):
+        for i, ch in enumerate(word):
+            
+            if ch not in node:
+                if ch == '.':
+                    return any(self.search_dfs(word[i+1:], node[c]) for c in node if c !='#')
+            
+                return False
+            else:
+                node = node[ch]
+            
+        return '#' in node
+     
+    def search(self, word: str) -> bool:
+        node = self.trie
+        return self.search_dfs(word, node)
+                
+  
+  C++ implementation is here:
+  https://leetcode.com/problems/design-add-and-search-words-data-structure/discuss/59552/C%2B%2B-Trie
