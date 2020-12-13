@@ -46,4 +46,17 @@ class Solution:
         # The size of the heap tells us the minimum rooms required for all the meetings.
         return len(free_rooms)
         
-        
+       # C++ solution using priority_queue:
+       
+// greedy : always change the smallest end time;
+// heap : min_heap
+// sort : sort the intervals by start time O(nlogn)
+int minMeetingRooms(vector<Interval>& intervals) {
+    sort(intervals.begin(), intervals.end(), [](Interval &i, Interval &j){return i.start < j.start;});
+    priority_queue<int, vector<int>, greater<int>> min_heap;
+    for(auto interval : intervals){
+        if(!min_heap.empty() && min_heap.top() <= interval.start) min_heap.pop();
+        min_heap.push(interval.end);
+    }
+    return min_heap.size();
+}
