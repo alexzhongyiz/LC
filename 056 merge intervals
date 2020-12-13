@@ -1,0 +1,49 @@
+python:
+my solution: time optimal, space not.
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        res = []
+        intervals.sort(key = lambda x : x[0])
+        
+        l, r = -inf, -inf
+       
+        for i, ab in enumerate(intervals):
+            if ab[0] <= r:
+                r = max(r, ab[1])
+            else:
+                res.append([l,r])
+                
+                l, r = intervals[i]
+            
+        res.append([l,r])
+        
+        return res[1:]
+        
+C++ version:       
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        if (!intervals.size()) return intervals;
+        
+        sort(intervals.begin(),intervals.end(),[](vector<int>&a, vector<int>&b){
+            return (a[0] < b[0]);
+        });
+        
+        vector<vector<int>> merged;
+        merged.push_back(intervals[0]);
+        
+        for (auto inter : intervals){
+            if (inter[0] <= merged.back()[1]){
+            merged.back()[1] = max(merged.back()[1], inter[1]);
+            }
+            else {
+                merged.push_back(inter);
+            }
+            
+        }
+        return merged;
+    }
+};
+   
+   
+Tree implementation (not yet understood) : https://leetcode.com/problems/merge-intervals/discuss/355318/Fully-Explained-and-Clean-Interval-Tree-for-Facebook-Follow-Up-No-Sorting
