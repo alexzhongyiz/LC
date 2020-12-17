@@ -1,0 +1,41 @@
+my method (use hashmap to give orders from 0 to 3 and use mod 4 to give cyclic order):
+
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        if not matrix or not matrix[0]:
+            return []
+        m,n = len(matrix), len(matrix[0])
+        res = []
+        flag = 0
+        i,j = 0,0
+        dirs = collections.defaultdict(int)
+        dirs[(0,1)] = 0
+        dirs[(1,0)] = 1
+        dirs[(0,-1)] = 2
+        dirs[(-1,0)] = 3
+        while flag < m*n -1 :
+            res.append(matrix[i][j])
+            cur = []
+            for x, y in dirs.keys():
+                if i+x < 0 or i + x >= m or j + y < 0 or j + y >= n or matrix[i+x][j + y] == '$':
+                    continue
+                cur.append((x,y))
+           # print(cur)
+            matrix[i][j] = '$'
+            
+            if len(cur) == 1:
+                i += cur[0][0]
+                j += cur[0][1]
+                
+            elif (dirs[cur[0]] - dirs[cur[1]])  % 4 == 1:
+                i += cur[1][0]
+                j += cur[1][1]
+                
+            else:
+                i += cur[0][0]
+                j += cur[0][1]
+            flag += 1
+            #print((i,j))
+        res.append(matrix[i][j])
+        return res
+              
