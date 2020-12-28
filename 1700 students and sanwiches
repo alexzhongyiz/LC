@@ -1,0 +1,22 @@
+Obervation that the number of remaining students depend on the difference of larger number of types of sandwiches (eg. if there are 6 type 0 sandwiches and only 4 type 0
+students, then when there must be 2 type 0 sandwiches remaining and all the remaining students would be 1s; thus we just need to find the location of the second to last 0):
+
+ def countStudents(self, students: List[int], sandwiches: List[int]) -> int:
+        a,b = collections.Counter(sandwiches)[0], collections.Counter(students)[0]
+        #print(a,b)
+        if a ==b: return 0
+        count = abs(a-b)
+        flag = 0 if a>b else 1
+        
+            
+        i = -1
+        cur = 0 if sandwiches[-1] != flag else 1
+        #print(cur)
+        while sandwiches[i]!=flag or cur < count:
+            i -= 1
+            if sandwiches[i] == flag:
+                cur += 1
+            #print(i,cur)
+        #print(i)
+        return abs(i)
+            
