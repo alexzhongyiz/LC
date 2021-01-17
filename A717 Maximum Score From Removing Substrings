@@ -1,0 +1,48 @@
+my solution, first to isolate the pieces, and then for each piece, there are m 'a' and n 'b' where we know we can get at least min(m,n) * min (x, y); we might add an extra 
+abs(x-y) whenever we have a possible "a" in front of "b" (if x > y) accumulatively.
+
+class Solution:
+    def maximumGain(self, s: str, x: int, y: int) -> int:
+        
+        res,l, seqs = 0,0,[]
+        if len(s) < 2: return 0
+        
+        while l < len(s):
+            while l < len(s) and s[l] not in {'a','b'}:
+                l += 1
+            r = l + 1
+            while r < len(s) and s[r] in {'a','b'}:
+                r += 1
+            seqs.append(s[l:r])
+            
+            l = r + 1
+        
+        #print(seqs)
+        res = 0
+    
+        for seq in seqs:
+            #print(seq)
+            m,n = collections.Counter(seq)['a'], collections.Counter(seq)['b']
+            
+            if x == y:
+                res += min(m,n) * x
+            elif x > y:
+                res += min(m,n) * y
+                running = 0
+                for char in seq[::-1]:
+                    if char == 'b':
+                        running = 1 + max(running, 0)
+                    else:
+                        running -= 1
+                        res += x-y if running >= 0 else 0
+            else:
+                res += min(m,n)*x
+                running = 0
+                for char in seq[::-1]:
+                    if char == 'a':
+                        running = 1 + max(running, 0)
+                    else:
+                        running -= 1
+                        res += y-x if running >=0 else 0
+        return res
+            
