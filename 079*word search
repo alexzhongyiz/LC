@@ -1,0 +1,37 @@
+This is a typical backtracking problem, my code:
+
+class Solution:
+    
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        m, n = len(board), len(board[0])
+        visited = [[0]*n for _ in range(m)]
+        
+        def find(i,j, words):
+            
+            if not words:
+                return True
+            if i< 0 or i >= m or j < 0 or j >= n:
+                return False
+            elif board[i][j] != words[0] or visited[i][j]:
+                #print("i:",i,"j:",j, "vi:", visited)
+                return False
+            else:
+                visited[i][j] = 1
+                #print("i:",i,"j:",j, "vi:", visited)
+                for v, h in [[-1,0],[1,0],[0,-1],[0,1]]:
+                    if find(i+v, j + h, words[1:]):
+                        return True
+                        
+                #now should be no piece adjacent to i,j works for remaining word
+                visited[i][j] = 0
+            
+        for i in range(m):
+            for j in range(n):
+                # the code below is redundant
+                #visited = [[0]*n for _ in range(m)]
+                if find(i,j,word):
+                    return True
+                
+        return False
+                
+                
