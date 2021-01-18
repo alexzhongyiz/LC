@@ -1,0 +1,50 @@
+This is a backtracking problem:
+my first solution:
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res,N = [], len(nums)
+        
+        def dfs(cur,vi,n):
+            #print(cur, vi, n, res)
+            if n == N:
+                res.append(list(cur))
+            for i in range(N):
+                
+                if vi[i] == 0:
+                    cur.append(nums[i])
+                    vi[i] = 1
+                    dfs(cur, vi, n+1)
+                    
+                    vi[i] = 0
+                    cur.pop()
+                
+            
+            
+        dfs([],[0]*len(nums), 0)
+            
+        return res
+        
+       --------------------------------------------------------------------
+       second solution: essentially the same idea:
+        res,N = [], len(nums)
+        
+        def dfs(cur, rem):
+            #print(cur, rem)
+            if not rem:
+                res.append(list(cur))
+            
+            else:
+                for i in range(len(rem)):
+                    cur.append(rem[i])
+                    rem.remove(rem[i])
+                    dfs(cur, rem)
+                    rem.insert(i, cur[-1])
+                    cur.pop()
+            
+        dfs([],nums)
+            
+        return res
+    
+                    
