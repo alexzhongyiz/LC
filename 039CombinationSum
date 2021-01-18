@@ -19,3 +19,5 @@ def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         dfs([],target, candidates)
         return res
             
+A link to all general backtracking problems:
+https://leetcode.com/problems/combination-sum/discuss/429538/General-Backtracking-questions-solutions-in-Python-for-reference-%3A
