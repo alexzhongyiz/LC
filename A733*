@@ -1,0 +1,44 @@
+There is really not that much difficulty, but we need to understand the logic;
+First unsuccesful: look at which user is absent in each language, then go for the friendships
+Then, realize that since we could just use a dictionary where the keys are languages, and the values are absent BUT based on the friendships of
+different nodes. For example, node 2 has language [2,3] node 2 has language [3]; even if language 1 is absent in both, but due to the fact that
+this friendship is already good, we don't add the nodes 2, 3 to the dictionary with key 1. However, if node has language [2], then we need to add
+the nodes 2,3 to language 1 and node 3 to language 2 and node 2 to language 3 etc.
+
+def minimumTeachings(self, n: int, languages: List[List[int]], friendships: List[List[int]]) -> int:
+        """"
+        lang_by_user = {}
+        
+        for i in range(len(languages)):
+            lang_by_user[i+1] = set(languages[i])
+        need_a_lang = [[u,v] for u, v in friendships if not lang_by_user[u].intersection(lang_by_user[v])]  
+        #print(need_a_lang)
+        """
+        
+        
+        """
+        absent_in_lang = collections.defaultdict(set)
+        for i in range(len(languages)):
+            for l in range(n):
+                if l not in languages[i]:
+                    absent_in_lang.add(i)
+        """      
+        
+        nodes_for_lang = collections.defaultdict(set)
+        
+        for u,v in friendships:
+            flag = 0
+            for l in range(1,n+1):
+                if l in languages[u-1] and l in languages[v-1]:
+                    flag = 1
+                    break
+            if not flag:
+                for l in range(1, n+1):
+                    if l not in languages[u-1]:
+                        nodes_for_lang[l].add(u)
+                    if l not in languages[v-1]:
+                        nodes_for_lang[l].add(v)
+        #print(nodes_for_lang)
+        return min([len(nodes_for_lang[l]) for l in range(1,n+1)])
+            
+        
