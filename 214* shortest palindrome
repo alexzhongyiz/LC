@@ -36,4 +36,30 @@ First try is TLE solution (O(n2)):
             
             
    KMP algo (O(n)):        
-   
+   explanations: https://leetcode.com/problems/shortest-palindrome/discuss/60113/Clean-KMP-solution-with-super-detailed-explanation
+   https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
+   In the following code, index is like j in the geeks explanation above.
+        if len(s) == 0:
+            return s
+        st = s + "#" + s[::-1]
+        
+        lp = [0]*len(st)
+        index = 0
+        for i in range(1,len(st)):
+            if st[i] == st[index]:
+                index += 1
+                #lp[i] = lp[i-1] + 1 (this is incorrect)
+                lp[i]  = lp[index] 
+                
+            else:
+                while index > 0 and st[i]!= st[index]:
+                    index = lp[index -1]
+                if st[i] == st[index]:
+                    index += 1
+                    lp[i] = index
+                    #lp[i] = lp[i-1]+1
+                else:
+                    
+                    lp[i] = 0
+        #print(lp)
+        return s[lp[-1]:][::-1]+s
