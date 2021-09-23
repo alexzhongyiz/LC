@@ -40,3 +40,27 @@ class Solution:
                     return area_helper(left_M, h_max, in_bet[:idx], 1) + area_helper(h_max, right_M, in_bet[idx + 1:], 0)
         
         return area_helper(0,0,height, 0)
+
+
+
+Monotonic stack:
+        st = []
+        
+        res = 0
+        for i in range(len(height)):
+            
+            # not i -j; more like last pop() - now last element
+            
+            while st and height[i] > height[st[-1]]:
+                j = st.pop()
+                res += (i-st[-1]-1)*(min(height[st[-1]],height[i]) - height[j]) if st else 0
+                
+            if not st:
+                st.append(i)
+                #L = height[i]
+            else:# here does not require height[i] < height[st[-1]] due to the situation like [5,2,1,2,1,5] where at the second 1, we should get (2-1)*(5-3-1) not (2-1)*(5-1-1) 
+                # where 3 and 1 are the indexes of the two 2s. namely the stack should look like [0,1,3] instead of [0,1] after we process the second 2.
+                st.append(i)
+            
+            #print(i,st,L,res)
+        return res
