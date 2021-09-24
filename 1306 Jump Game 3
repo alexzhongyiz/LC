@@ -1,3 +1,4 @@
+My solution: BFS.
 def canReach(self, arr: List[int], start: int) -> bool:
         from collections import deque
         
