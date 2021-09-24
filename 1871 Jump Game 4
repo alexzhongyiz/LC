@@ -1,0 +1,8 @@
+first trial TLE:O(N^(max-min))
+def canReach(self, s: str, minJump: int, maxJump: int) -> bool:
+        res = False
+        for i in range(minJump,min(len(s),maxJump+1)):
+            if s[i] =='0':
+                #print(s[i:])
+                res =  res or (i == len(s) -1) or self.canReach(s[i:],minJump,maxJump)
+        return res
