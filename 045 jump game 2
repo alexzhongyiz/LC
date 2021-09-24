@@ -1,0 +1,13 @@
+O(n2) time, O(n) space:
+
+def jump(self, nums: List[int]) -> int:
+        sh= [float("inf")]*len(nums)
+        sh[0] = 0
+        for i in range(len(nums)):
+            for j in range(i+1,i + nums[i] +1):
+                if j < len(nums):
+                    
+                    sh[j] = min(sh[j],sh[i]+1)
+                    #print(i,j,sh)
+        return sh[-1]
+                    
