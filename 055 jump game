@@ -1,0 +1,14 @@
+My solution:
+def canJump(self, nums: List[int]) -> bool:
+        
+        i,M = 0,0
+        while i<=M and i< len(nums):
+            #print(i,M)
+            if i + nums[i] > M:
+                M = i + nums[i]
+            elif i == M:
+                break
+            else:
+                i+=1
+        return True if M >= len(nums) -1 else False
+            
