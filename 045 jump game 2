@@ -10,4 +10,7 @@ def jump(self, nums: List[int]) -> int:
                     sh[j] = min(sh[j],sh[i]+1)
                     #print(i,j,sh)
         return sh[-1]
-                    
+ 
+ For best solution in time & space: 
+ https://leetcode.com/problems/jump-game-ii/discuss/1192457/JavaPython-DP-Greedy-Solutions-Time%3A-O(N)-Space%3A-O(1)
+ https://leetcode.com/problems/jump-game-ii/discuss/1192401/Easy-Solutions-w-Explanation-or-Optimizations-from-Brute-Force-to-DP-to-Greedy-BFS
