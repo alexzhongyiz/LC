@@ -1,0 +1,17 @@
+def canReach(self, arr: List[int], start: int) -> bool:
+        from collections import deque
+        
+        visited = {start}
+        nxt = deque([start])
+        while nxt:
+            i = nxt.popleft()
+            if arr[i] ==0:
+                return True
+            if i - arr[i] >=0 and i-arr[i] not in visited:
+                nxt.append(i-arr[i])
+            if i + arr[i] < len(arr) and i+arr[i] not in visited:
+                nxt.append(i+arr[i])
+            visited.add(i)
+            #print(i,nxt,visited)
+        return False
+        
