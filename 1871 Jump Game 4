@@ -6,3 +6,34 @@ def canReach(self, s: str, minJump: int, maxJump: int) -> bool:
                 #print(s[i:])
                 res =  res or (i == len(s) -1) or self.canReach(s[i:],minJump,maxJump)
         return res
+        
+second trial(greedy + dfs),still TLE ( with test case s = '000000000000000000111111111111111111111110' with A '0's in the begining and B '1's following,
+and minJump = 1, maxJump = M where M<=B.
+here we know no matter what, we are not going to get to the last piece but our algorithm seems to go test against each '1' for (MaxJump-minJump) times,
+which is a complete waste of time. So the time complexity is still O(N^(M-m))
+
+
+def canReach(self, s: str, minJump: int, maxJump: int) -> bool:
+        if s[-1] == '1':
+            return False
+        import collections
+        from collections import deque
+        st = deque([0])
+        
+        while st:
+            big = st.pop()
+            s = s[:big]+ '*'+s[big+1:]
+            #print(s)
+            if big + maxJump > len(s)-2 and big + minJump<len(s):
+                return True
+            for i in range(big+minJump,min(big+maxJump+1,len(s))):
+                if s[i] == '0':
+                    st.append(i)
+            #print(st)
+        return False
+One solution to the above problem is in https://leetcode.com/problems/jump-game-vii/discuss/1224963/BFS-C%2B%2B-Explained (BFS+optimization)
+Another is https://leetcode.com/problems/jump-game-vii/discuss/1224681/Python3-Thinking-process-no-DP-needed
+
+Third method:DP:
+
+
