@@ -23,3 +23,33 @@ def maximalSquare(self, matrix: List[List[str]]) -> int:
         
         
  Hint: can do this using only 1 parameter for each dp[i][j], thus also make dp O(m)...
+
+
+On 20210926; we work on the length of the square: first length = 1 (as long as there is one "1" in the matrix). 
+second, assuming we have square of length l-1 with upper left corner (i,j), then if we have square of length l-1 with upper left corner
+(i,j+1),(i+1,j) and (i+1,j+1) we will be good to have square of length l with upper corner (i,j). Thus for every length we only
+need to test from 0 to  len(matrix) -l and 0 to len(matrix[0]) -l for a length l square:
+
+    def maximalSquare(self, matrix: List[List[str]]) -> int:
+        M,N = len(matrix),len(matrix[0])
+        if not M or not N:
+            return 0
+        if not sum([int(matrix[i][j]) for i in range(M) for j in range(N)]):
+            return 0
+                
+        l = 1
+        
+        while l <= min(M,N):
+            exist = False
+            for i in range(M-l):
+                for j in range(N-l):
+                    if matrix[i][j] =="1" and matrix[i][j+1]=="1" and matrix[i+1][j]=="1" and matrix[i+1][j+1]=="1":
+                        
+                        exist = True
+                    else:
+                        matrix[i][j]= '*'
+            if not exist:
+                return l*l
+            #print(l,matrix)
+            l+= 1
+        return l*l
