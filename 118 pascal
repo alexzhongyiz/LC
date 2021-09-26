@@ -1,0 +1,11 @@
+        res,prev = [[1]],[]
+        for i in range(1,numRows):
+            tmp = [1]
+            for j in range(len(prev)-1):
+                tmp.append(prev[j]+prev[j+1])
+            tmp.append(1)
+            res.append(tmp)
+            prev = tmp
+        return res
+        
+    The top python solutions in the discussions are amazing!
