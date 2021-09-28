@@ -9,3 +9,31 @@ def coinChange(self, coins, amount):
                 dp[i] = min(dp[i], dp[i - coin] + 1)
        
     return dp[amount] if dp[amount] != float('inf') else -1  
+
+
+on 20210927:(backwards,find the smallest )
+def coinChange(self, coins: List[int], amount: int) -> int:
+        
+        vi = {amount:0}
+        cur,step_to_amount = amount,0
+        queue = [(cur,step_to_amount)]
+        coins.sort()
+        while queue:
+            #print(queue)
+            cur,step_to_amount = queue.pop(0)
+            if 0 in vi.keys() and vi[0]<=step_to_amount:
+                continue
+            for c in coins[::-1]:
+                if cur -c in vi.keys():
+                    vi[cur-c] = min(vi[cur-c],step_to_amount + 1)
+                elif cur -c < 0:
+                    continue
+                else:
+                    vi[cur -c] = step_to_amount + 1
+                    queue.append((cur-c,step_to_amount+1))
+            #print(vi)  
+        if 0 in vi.keys():
+            return vi[0]
+        else:
+            return -1
+                
