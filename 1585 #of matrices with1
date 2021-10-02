@@ -31,3 +31,8 @@ def numSubmat(self, mat: List[List[int]]) -> int:
                             v -=1
                         #print("res:", res)
         return res     
+
+On second thought, the later part could be solved using monotone stack. Since we are only interested in the jth column, 
+more precisely, we are only interested in hv[v][j][0] for v in 0,1,...i; and look for the first v such that hv[v][j][0] < k.
+we can use a monotone stack:
+
