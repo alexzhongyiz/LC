@@ -1,2 +1,3 @@
 BST (implemented using SortedList()):https://leetcode.com/problems/contains-duplicate-iii/discuss/824603/Python-SortedList-O(n-log-k)-solution-explained.
+the functions of SortedContainers are here: http://www.grantjenks.com/docs/sortedcontainers/sortedlist.html
 Even more time optimized: https://leetcode.com/problems/contains-duplicate-iii/discuss/61676/Python-solution-with-detailed-explanation
