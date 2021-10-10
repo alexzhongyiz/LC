@@ -28,4 +28,5 @@
 220. 2 (how to do BST in python; one way is using SortedList() and bisect_left/right())
 174.4
 241.2 (understand reg exp and operators)
-1140 (stone game II) 2.
+1140 (stone game II) 2.( the key here in Lee215's solution is to use lrucache in functiontools;a good tutorial on lru cache is:
+https://realpython.com/lru-cache-python/)
