@@ -1,0 +1,25 @@
+#Try 300 first
+import bisect 
+class Solution:
+    def findNumberOfLIS(self, nums: List[int]) -> int:
+        n,m,dict_list = len(nums),0,[{-1000001:1}]
+        piles = [0]*(n+1)
+        piles[0] = -1000001
+        for i in range(0,n):
+            j = bisect.bisect_left(piles,nums[i],0,m+1)
+            
+            if j == m+1:
+                piles[m+1] = nums[i]
+                new_cnt = sum(dict_list[m][key] for key in dict_list[m] if key < nums[i])
+                dict_list.append({nums[i]:new_cnt})
+                m +=1
+            else:
+                piles[j] = nums[i]
+                if nums[i] in dict_list[j]:
+                    dict_list[j][nums[i]] +=sum(dict_list[j-1][key] for key in dict_list[j-1] if key < nums[i])
+                else:
+                    dict_list[j][nums[i]] = sum(dict_list[j-1][key] for key in dict_list[j-1] if key < nums[i])
+                
+            #print(i,j,m,piles[:m],dict_list)
+          
+        return sum(dict_list[-1][key] for key in dict_list[-1])      
