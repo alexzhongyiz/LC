@@ -1,0 +1,15 @@
+import bisect
+class Solution:
+    def findLongestChain(self, pairs: List[List[int]]) -> int:
+        
+        pairs = sorted(pairs,key = lambda x: x[0]*1000 + x[1])
+        increasing = [-1001]
+        for l,r in pairs:
+            i = bisect.bisect_right(increasing,l)
+            if i == len(increasing):
+                if l > increasing[-1]:
+                    increasing.append(r)
+            else:
+                increasing[i] = min(increasing[i], r)
+            #print(l,r, increasing,i)
+        return len(increasing)-1
