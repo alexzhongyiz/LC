@@ -37,4 +37,6 @@ https://realpython.com/lru-cache-python/)
 673 (number of longest increasing sequence) (20211028). 4
 646 4.
 354 1. (slick way of 300 LIS)
-239 0.
+239 0. (the first comment in https://leetcode.com/problems/sliding-window-maximum/discuss/65885/This-is-a-typical-monotonic-queue-problem leads to 84; 496; 581; 862;)
+581. 4(with the mindset of 239)
+862. 0 (even with hint of 239)
