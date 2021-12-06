@@ -1,0 +1,22 @@
+ use monotonic stack and look for the largest number smaller than the bigger one and compare to the smallest number 
+ smaller than the middle one.
+ def find132pattern(self, nums: List[int]) -> bool:
+        m = [-1,0]
+        st = collections.deque()
+        for i in range(2,len(nums)):
+            if nums[i-1] < nums[m[-1]]:
+                m.append(i-1)
+            else:
+                m.append(m[-1])
+        #print(m)
+        for i in range(len(nums)-1,0,-1):
+            #print(i,st)
+            while st and nums[i] > nums[st[-1]]:
+                if nums[st[-1]] > nums[m[i]]:
+                    #print(m[i],i,st[-1])
+                    return True
+                st.pop()
+            st.append(i)
+        return False
+            
+            
