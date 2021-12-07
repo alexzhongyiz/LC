@@ -44,3 +44,4 @@ https://realpython.com/lru-cache-python/)
 316.0*
 456.3
 962. 4 on the second try.
+769 3 (didn't realize what the right monotonic stack should be).
