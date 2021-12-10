@@ -1,0 +1,18 @@
+def maximumSwap(self, num: int) -> int:
+        A = [c for c in str(num)]
+        l, r = -1,-1
+        st = collections.deque()
+        for i in range(len(A)):
+            while st and A[st[-1]] < A[i]:
+                l = min(l,st.pop()) if l >=0 else st.pop()
+                r = i
+                
+            if l == -1:
+                st.append(i)
+            if r>=0 and A[i] >=A[r]:
+                r = i
+                
+            #print(i,l,r,m,st)
+        if l>= 0:
+            A[l],A[r] = A[r], A[l] 
+        return int("".join(A))
