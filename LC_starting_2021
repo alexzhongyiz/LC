@@ -50,3 +50,6 @@ https://realpython.com/lru-cache-python/)
 670 4
 1996 1*
 768 3
+
+On Heapq/quickselect idea:
+973 3* (look at solution 4, it is a good explanation on finding the kth smallest/largest element using quickselect!)
