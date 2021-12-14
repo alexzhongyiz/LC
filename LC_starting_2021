@@ -53,5 +53,6 @@ https://realpython.com/lru-cache-python/)
 
 On Heapq/quickselect idea:
 973 3* (look at solution 4, it is a good explanation on finding all k (or the kth) smallest/largest elements using quickselect!)
+295 2 (got 2 hp idea).
 871 0
-1353* https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/discuss/1116371/Python-With-detailed-explanation
+1353 0* https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/discuss/1116371/Python-With-detailed-explanation
