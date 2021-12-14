@@ -1,0 +1,24 @@
+the following code fails to account for the fact that if you only fuel at the largest and not at the second largest
+before the largest, then there is a case that we might not reach the target.
+
+def minRefuelStops(self, target: int, startFuel: int, stations: List[List[int]]) -> int:
+        hp,lp,lf,res = [],0,startFuel,0
+        if target<= lf:
+            return res
+        for p,f in stations:
+            if target<= lf:
+                return res
+            if p <= lf:
+                heapq.heappush(hp,[-f,p])
+            else:
+                while hp:
+                    pair = heapq.heappop(hp)
+                    f,p = -pair[0],pair[1]
+                    if p > lp:
+                        lp = p
+                        lf += f
+                        res += 1
+                        
+            print(p,f,hp,lp,lf)
+        return -1
+        
