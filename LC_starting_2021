@@ -56,3 +56,5 @@ On Heapq/quickselect idea:
 295 2 (got 2 hp idea).
 871 0
 1353 0* https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/discuss/1116371/Python-With-detailed-explanation
+560 4 (using hint from https://gist.github.com/Windsooon/e663358a6be45a93af2665206c4d4ae9)
+410 0* (read the solution!)
