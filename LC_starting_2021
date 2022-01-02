@@ -59,3 +59,4 @@ On Heapq/quickselect idea:
 560 4 (using hint from https://gist.github.com/Windsooon/e663358a6be45a93af2665206c4d4ae9)
 410 0* (read the solution!)
 341 1* (read the solution! about GENERATORS in python)
+1087 3* (see https://leetcode.com/problems/brace-expansion/discuss/314308/Python-3-line-Using-Product; which uses itertools.product and packing & unpacking arguments)
