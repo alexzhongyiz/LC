@@ -21,3 +21,28 @@ def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
             
 A link to all general backtracking problems:
 https://leetcode.com/problems/combination-sum/discuss/429538/General-Backtracking-questions-solutions-in-Python-for-reference-%3A
+
+
+A special note about backtracking; see the following solution:
+def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        candidates.sort()
+        self.res = []
+        
+        
+                
+                
+        self.dfs(candidates,target,[])
+        return self.res
+            
+    def dfs(self, cands,tar,path):
+            #print(cands,tar,path)
+            if tar == 0:
+                self.res.append(list(path))   # Here I use list(path) instead of path because if I use this; later on when I modify path; this is also modified. Thus I need to append a copy of it!
+                #print("res", self.res)
+                return 
+            if tar < 0:
+                return
+            for i in range(len(cands) -1, -1, -1):
+                path.append(cands[i])
+                self.dfs(cands[:i+1],tar -cands[i], path)
+                path.pop()
