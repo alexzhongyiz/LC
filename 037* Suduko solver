@@ -1,0 +1,63 @@
+a conside solution besides the official one: 
+https://leetcode.com/problems/sudoku-solver/discuss/140837/Python-very-simple-backtracking-solution-using-dictionaries-and-queue-~100-ms-beats-~90
+
+Not sure why my own doesn't work. 
+def solveSudoku(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        
+        """
+        rows = []
+        columns = []
+        #blocks = [[]*3 for _ in range(3)]
+        blocks = collections.defaultdict(set)
+        for i in range(9):
+            rows.append(set([int(board[i][j]) for j in range(9) if board[i][j]!="."]))
+        for j in range(9):
+            columns.append(set([int(board[i][j]) for i in range(9) if board[i][j]!="."]))
+        #print(blocks)    
+        for m in range(3):
+            for n in range(3):
+                blocks[(m,n)] = set([int(board[3*m+i][3*n+j]) for i in range(3) for j in range(3) if board[3*m+i][3*n+j]!="."]) 
+                
+        
+        visit = collections.deque([(i,j) for i in range(9) for j in range(9) if board[i][j]=="."])
+        path = []
+        def placenum(r,c,dig):
+            rows[r].add(dig)
+            columns[c].add(dig)
+            blocks[(r//3,c//3)].add(dig)
+            board[r][c] = str(dig)
+            visit.remove((r,c))
+            path.append((r,c,dig))
+        def removenum(r,c,dig):
+            rows[r].remove(dig)
+            columns[c].remove(dig)
+            blocks[(r//3,c//3)].remove(dig)
+            board[r][c] = "."
+            visit.appendleft((r,c))
+            path.remove((r,c,dig))
+        #print("rows","\n",rows,"\ncols:\n",columns,"\nblock\n",blocks)
+        #print("visit\n",visit)
+        
+        
+        def backtrack(tupl):
+            i,j = tupl
+            eligible_digs = [dig for dig in range(1,10) if dig not in rows[i] and dig not in columns[j] and dig not in blocks[(i//3,j//3)]]
+            if not eligible_digs:
+                #print("no eligible at",i,j)
+                return False
+            for dig in eligible_digs[::-1]:
+                
+                placenum(i,j,dig)
+                #print(i,j,dig,"path",path,len(visit))    
+                if len(visit) == 0:
+                    return True
+                ret = backtrack(visit[0])
+                if not ret:
+                    removenum(i,j,dig)
+
+         
+        
+        
+        backtrack(visit[0])
