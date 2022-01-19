@@ -67,4 +67,4 @@ Backtracking: Note that if we were to backtrack; if we want to save anything, we
 037: 1* ; 
 022 : https://leetcode.com/problems/generate-parentheses/discuss/10110/Simple-Python-DFS-solution-with-explanation (another way to understand the backtrack official soln).
 077/078/040: 4
-0
+079: 0* get the conditions logic correct!
