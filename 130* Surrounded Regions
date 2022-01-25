@@ -60,4 +60,61 @@ class Solution:
                     board[x][y] = 'X'
                 if board[x][y] =='N':
                     board[x][y] = 'O'
+##########################################        
+##### Union Find solution#################
+def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        ### Union find solution
+        land = set()
+        for i in range(len(board)):
+            for j in range(len(board[i])):
+                if board[i][j] == "O":
+                    land.add((i,j))
+        self.parents = collections.defaultdict()
+        self.size = collections.defaultdict(int)
+        self.isBound = collections.defaultdict(bool)
+        
+        def isbound(tup):
+            r,c = tup
+            return True if r == 0 or r == len(board) -1 or c == 0 or c== len(board[0]) - 1 else False
+        
+        for i,j in land:
+            self.parents[(i,j)] = (i,j)
+            self.size[(i,j)] = 1  
+            self.isBound[(i,j)] = isbound((i,j)) 
+          
+        #need to worry about the surrounding     
+        def find(n):
+            if n != self.parents[n]:
+                self.isBound[self.parents[n]] |= self.isBound[n]
+                self.parents[n] = find(self.parents[n])
+                
+            return self.parents[n]
+           
+        def union(n1,n2):
+            r1,r2 = find(n1), find(n2)
+            if r1 != r2:
+                if self.size[r1] < self.size[r2]:
+                    r1,r2 = r2,r1
+                self.parents[r2] = r1
+                self.size[r1] = self.size[r2] + self.size[r1]
+                self.isBound[r1] |= self.isBound[r2]
+        
+        for i,j in land:
+            
+            for v, h in [[-1,0],[1,0],[0,-1],[0,1]]:
+                if (i+v,j+h) in land:
+                    union((i,j),(i+v,j+h))
+        
+        #print(self.parents,self.isBound)
+        #remove those without boundary
+        for i,j in land:
+            root = find((i,j))
+            #print(i,j,root)
+            if not self.isBound[root]:
+                board[i][j] ="X"
+        
+                
         
