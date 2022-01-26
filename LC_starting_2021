@@ -76,3 +76,12 @@ Note that if we were to backtrack; if we want to save anything, we need to save 
 
 
 ******************Trie*****************************************
+
+
+**************Union Find*****************************************
+130: 4 could also try bfs/dfs
+720: 2* The unionfind parents doens't have to be elements themselves; 
+can be indices: https://leetcode.com/problems/accounts-merge/discuss/1084738/Python-The-clean-Union-Find-solution-you-are-looking-for
+
+
+
