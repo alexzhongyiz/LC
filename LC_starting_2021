@@ -60,7 +60,7 @@ On Heapq/quickselect idea:
 410 0* (read the solution!)
 341 1* (read the solution! about GENERATORS in python)
 1087 3* (see https://leetcode.com/problems/brace-expansion/discuss/314308/Python-3-line-Using-Product; which uses itertools.product and packing & unpacking arguments)
-
+341: 3* used breath first search. Not optimal.
 
 ***************************************Backtracking***************************************
 Note that if we were to backtrack; if we want to save anything, we need to save a copy of it; otherwise it will be lost!(see the explanation for 039 combination sum!)
@@ -76,7 +76,9 @@ Note that if we were to backtrack; if we want to save anything, we need to save 
 
 
 ******************Trie*****************************************
-
+208, implementing Trie 0* 
+139: word break: implementing Trie + dfs
+212 0* with pruning. See solutions
 
 **************Union Find*****************************************
 130: 4 could also try bfs/dfs
