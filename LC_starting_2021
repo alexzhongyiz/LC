@@ -84,6 +84,7 @@ a. https://leetcode.com/problems/search-suggestions-system/discuss/1242823/C%2B%
 b.https://leetcode.com/problems/search-suggestions-system/discuss/508775/Python-Trie-%2B-sort-Trie-%2B-Heap
 642: 3
 472 2* Still need to use DFS: see https://leetcode.com/problems/concatenated-words/discuss/765634/Python-Trie-solution-explained
+or the following dfs with memo solution: https://leetcode.com/problems/concatenated-words/discuss/159348/Python-DFS-readable-solution
 
 **************Union Find*****************************************
 130: 4 could also try bfs/dfs
