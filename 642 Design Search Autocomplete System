@@ -1,0 +1,66 @@
+#first of all, understand the quesiton, the input is one single character and as long as we don't encounter #, we assume that the sentence goes on.
+# In my solution, at each node, not only we store the characters, we also store a dictionary that put values as the number of times 
+# We keep a running string that keeps adding until we encounter #; 
+# we we encounter #, we first go over the sentence in the trie and add 1 to each node, then reset the runing string, also the current node is reset to root.
+
+class Trie():
+        def __init__(self):
+            self.child = collections.defaultdict(Trie)
+            self.sentence = collections.defaultdict(int)
+            
+        def addSentence(self,sentence, times):
+            curr = self
+            for c in sentence:
+                
+                curr = curr.child[c]
+                curr.sentence[sentence] += times
+                #print(c,curr.sentence)
+           
+
+class AutocompleteSystem:
+
+    def __init__(self, sentences: List[str], times: List[int]):
+        self.root = Trie()
+        for i in range(len(times)):
+            self.root.addSentence(sentences[i],times[i])
+        self.curr = self.root
+        self.running = ""
+    def input(self, c: str) -> List[str]:
+        ans = []
+        
+        self.running += c
+        self.curr = self.curr.child[c]
+        ans = self.getsentence(self.curr,3)
+            
+        if c == '#':
+            ans = []
+            node = self.root
+            for i in self.running[:-1]:
+                node = node.child[i]
+                node.sentence[self.running[:-1]] +=1
+            self.running = ""
+            self.curr = self.root
+            # print("after input",self.root.child["i"].sentence)        
+        return ans
+    
+    def getsentence(self,node,limit):
+        
+        sents = [(i,key) for key,i in node.sentence.items()]
+        
+        def compare(item1,item2):  
+            if item1[0] != item2[0]:
+                return -1 if item1[0] > item2[0] else 1
+            else:
+                return -1 if item1[1] < item2[1] else 1
+            
+        from functools import cmp_to_key
+        sents = sorted(sents,key = cmp_to_key(compare))
+        #print(sents)
+        return [key for _,key in sents[:min(len(sents),limit)]]
+    
+    
+
+
+# Your AutocompleteSystem object will be instantiated and called as such:
+# obj = AutocompleteSystem(sentences, times)
+# param_1 = obj.input(c)
