@@ -79,6 +79,11 @@ Note that if we were to backtrack; if we want to save anything, we need to save 
 208, implementing Trie 0* 
 139: word break: implementing Trie + dfs
 212 0* with pruning. See solutions
+1268: 2* not sure which part of the test case failed. the following solutions are good though:
+a. https://leetcode.com/problems/search-suggestions-system/discuss/1242823/C%2B%2BPython-3-solutions-Clean-and-Concise
+b.https://leetcode.com/problems/search-suggestions-system/discuss/508775/Python-Trie-%2B-sort-Trie-%2B-Heap
+642: 3
+
 
 **************Union Find*****************************************
 130: 4 could also try bfs/dfs
