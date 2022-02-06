@@ -91,5 +91,17 @@ or the following dfs with memo solution: https://leetcode.com/problems/concatena
 720: 2* The unionfind parents doens't have to be elements themselves; 
 can be indices: https://leetcode.com/problems/accounts-merge/discuss/1084738/Python-The-clean-Union-Find-solution-you-are-looking-for
 
+*******************Bit Operations**********************************
+029: divide integer. 0* Great Solution on binary search core idea!
+067 3* Look at the solution; especially bit manipulation part!
+137: 0* Bitwise XOR NOT etc. The official solution might come out of nowhere, look at the following two posts:
+https://leetcode.com/problems/single-number-ii/discuss/43296/An-General-Way-to-Handle-All-this-sort-of-questions.
+https://leetcode.com/problems/single-number-ii/discuss/43295/Detailed-explanation-and-generalization-of-the-bitwise-operation-method-for-single-numbers
 
+-------------------------------------------------------------------------------------------------------------------------------------------
+Special Algo/Data Structure:
+*******************Segment Tree**************************
+a good explanation: https://www.youtube.com/watch?v=Oq2E2yGadnU&ab_channel=JAlgs;
+its accompanying implementation in python:
+https://github.com/jakobkogler/Algorithm-DataStructures/blob/master/RangeQuery/SegmentTree.py
 
