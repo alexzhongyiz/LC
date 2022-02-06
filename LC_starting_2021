@@ -97,8 +97,10 @@ can be indices: https://leetcode.com/problems/accounts-merge/discuss/1084738/Pyt
 137: 0* Bitwise XOR NOT etc. The official solution might come out of nowhere, look at the following two posts:
 https://leetcode.com/problems/single-number-ii/discuss/43296/An-General-Way-to-Handle-All-this-sort-of-questions.
 https://leetcode.com/problems/single-number-ii/discuss/43295/Detailed-explanation-and-generalization-of-the-bitwise-operation-method-for-single-numbers
+260: 0*; there is an operation x & (-x) to tell the first 1 in the binary expressionary of a number.
 
--------------------------------------------------------------------------------------------------------------------------------------------
+
+================================================================================================================
 Special Algo/Data Structure:
 *******************Segment Tree**************************
 a good explanation: https://www.youtube.com/watch?v=Oq2E2yGadnU&ab_channel=JAlgs;
