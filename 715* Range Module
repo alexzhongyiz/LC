@@ -1,0 +1,4 @@
+This solution is amazing: fully understand and including some comments below.
+https://leetcode.com/problems/range-module/discuss/244194/Python-solution-using-bisect_left-bisect_right-with-explanation
+
+The question is supposed to be a segment tree. Yet how to do this in python?
