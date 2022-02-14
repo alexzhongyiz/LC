@@ -98,7 +98,7 @@ can be indices: https://leetcode.com/problems/accounts-merge/discuss/1084738/Pyt
 https://leetcode.com/problems/single-number-ii/discuss/43296/An-General-Way-to-Handle-All-this-sort-of-questions.
 https://leetcode.com/problems/single-number-ii/discuss/43295/Detailed-explanation-and-generalization-of-the-bitwise-operation-method-for-single-numbers
 260: 0*; there is an operation x & (-x) to tell the first 1 in the binary expressionary of a number.
-
+421 0* bit Trie. 
 
 ================================================================================================================
 Special Algo/Data Structure:
