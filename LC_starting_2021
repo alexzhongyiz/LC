@@ -68,6 +68,7 @@ Note that if we were to backtrack; if we want to save anything, we need to save 
 077/078/040: 4
 079: 0* get the conditions logic correct!
 051:3* N-Queens 
+2179: 3* could use SortedList to get time complexity to nlogn; Could also use Fenwick Tree. Such a beatiful combination of binary tree and bit operation.
 
 
 ***************ToplogicalSort*******************************
@@ -92,13 +93,18 @@ or the following dfs with memo solution: https://leetcode.com/problems/concatena
 can be indices: https://leetcode.com/problems/accounts-merge/discuss/1084738/Python-The-clean-Union-Find-solution-you-are-looking-for
 
 *******************Bit Operations**********************************
+look at ith binary digit: n>>i & 1
 029: divide integer. 0* Great Solution on binary search core idea!
 067 3* Look at the solution; especially bit manipulation part!
 137: 0* Bitwise XOR NOT etc. The official solution might come out of nowhere, look at the following two posts:
 https://leetcode.com/problems/single-number-ii/discuss/43296/An-General-Way-to-Handle-All-this-sort-of-questions.
 https://leetcode.com/problems/single-number-ii/discuss/43295/Detailed-explanation-and-generalization-of-the-bitwise-operation-method-for-single-numbers
-260: 0*; there is an operation x & (-x) to tell the first 1 in the binary expressionary of a number.
+260: 0*; there is an operation x & (-x) to tell the last 1 in the binary expressionary of a number. or x&(x-1) to eliminate the last 1.
 421 0* bit Trie. 
+190: 3* return int(bin(n)[2:].zfill(32)[::-1],2) Don't forget zfill(32)! 
+   Still. Look at the solutions for better ideas!!!
+
+
 
 ================================================================================================================
 Special Algo/Data Structure:
