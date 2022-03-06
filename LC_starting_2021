@@ -50,6 +50,7 @@ https://realpython.com/lru-cache-python/)
 670 4
 1996 1*
 768 3
+2195: 0*. https://leetcode.com/problems/append-k-integers-with-minimal-sum/discuss/1823621/Python-Explanation-with-pictures-Binary-Search
 
 On Heapq/quickselect idea:
 973 3* (look at solution 4, it is a good explanation on finding all k (or the kth) smallest/largest elements using quickselect!)
