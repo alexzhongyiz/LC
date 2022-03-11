@@ -1,0 +1,67 @@
+My trial: TLE
+class Solution:
+    #  we don't use sortedList.remove(ht) because it removes all
+    #occurances of ht; can't remove just one instance if there are multiple heights.
+    def getSkyline(self, buildings: List[List[int]]) -> List[List[int]]:
+        from sortedcontainers import SortedList
+        ehp = []
+        e2h = collections.defaultdict(set)
+        from heapq import heapify, heappush,heappop
+        #heapify(hhp)
+        heapify(ehp)
+        hts = SortedList()
+        currh = 0
+        i = 0
+        res = []
+        while i < len(buildings) or ehp:
+           # print(res)
+            l,r,h = float('inf'),float('inf'),float("inf")
+            if i < len(buildings):
+                l,r,h = buildings[i]
+            
+            if not ehp or l < ehp[0]:
+                
+                heappush(ehp,r)
+                hts.add(h)
+                e2h[r].add(h)
+                currh = max(currh,h) 
+                if not res or currh != res[-1][1]:
+                    if not res or l > res[-1][0]:
+                        res.append([l,currh])
+                    else:
+                        res[-1] = [l,currh]
+                
+                i +=1
+                
+            elif l > ehp[0]:
+                e = heappop(ehp)
+                for ht in e2h[e]:
+                    if ht in hts:
+                        index = bisect.bisect_left(hts,ht)
+                        hts.pop(index)
+                currh = hts[-1] if hts else 0
+                if currh != res[-1][1]:
+                    res.append([e,currh])
+            else:
+                #print(l,ehp,hts,res)
+                while ehp and ehp[0] == l:
+                    e = heappop(ehp)
+                    for ht in e2h[e]:
+                        if ht in hts:
+                            index = bisect.bisect_left(hts,ht)
+                            #hts.remove(ht)
+                            hts.pop(index)
+                heappush(ehp,r)
+                hts.add(h)
+                e2h[r].add(h)
+                currh = hts[-1]
+
+                i +=1
+                if currh !=res[-1][1]:
+
+                    res.append([e,currh])
+                #print(ehp,hts,res)
+            if len(res) >=2 and res[-1][1] == res[-2][1]:
+                res = res[:-1]
+        return res
+            
