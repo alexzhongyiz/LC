@@ -64,7 +64,7 @@ On Heapq/quickselect idea:
 341: 3* used breath first search. Not optimal.
 097: 0*
 187: 0*
-
+218: 0* using sortedlist, heap, TLE
 ***************************************Backtracking***************************************
 Note that if we were to backtrack; if we want to save anything, we need to save a copy of it; otherwise it will be lost!(see the explanation for 039 combination sum!)
 022: 0* : Here the backtradcking is essentially a DFS: https://leetcode.com/problems/generate-parentheses/discuss/10110/Simple-Python-DFS-solution-with-explanation(another way to understand the backtrack official soln).
@@ -115,4 +115,10 @@ Special Algo/Data Structure:
 a good explanation: https://www.youtube.com/watch?v=Oq2E2yGadnU&ab_channel=JAlgs;
 its accompanying implementation in python:
 https://github.com/jakobkogler/Algorithm-DataStructures/blob/master/RangeQuery/SegmentTree.py
+*************KMP****************************************
+https://leetcode.com/problems/shortest-palindrome/solution/
+https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
+https://leetcode.com/problems/shortest-palindrome/discuss/60113/clean-kmp-solution-with-super-detailed-explanation
 
+*********************Boyer-Moore Voting Algorithm**************
+https://leetcode.com/problems/majority-element-ii/solution/
