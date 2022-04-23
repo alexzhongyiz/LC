@@ -81,10 +81,12 @@ Note that if we were to backtrack; if we want to save anything, we need to save 
 
 
 ***************ToplogicalSort*******************************
+207(course schedule): 2* two ideas: a. Kahn's algo in top sort; b. dfs, but need to use 3 colors (states) to denote a node's state
 
 
-
-
+**************design****************************************
+146(LRU): 0* (20220419)
+380: 0*(20220419)
 ******************Trie*****************************************
 208, implementing Trie 0* 
 139: word break: implementing Trie + dfs
