@@ -135,5 +135,11 @@ https://leetcode.com/problems/majority-element-ii/solution/
 *******************************Dijkstras algo***********
 problem list: https://leetcode.com/list/53js48ke/
 
+***************binary search*********************
+Wei Chen's trick on binary search algo:
 
+# l = mid, r = mid -1 -> mid = l + (r-l+1)//2
+# l = mid + 1, r = mid -> mid = l + (r-l)//2
+# l = mid +1, r = mid -1 -> mid can be written in either case
+# l= mid, r = mid, then loop condition becomes while l < r - 1, after loop, check l and r separately.
 
