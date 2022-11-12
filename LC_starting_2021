@@ -26,6 +26,7 @@
 2024/424:0
 2025:1.
 220. 2 (how to do BST in python; one way is using SortedList() and bisect_left/right())
+as in https://leetcode.com/problems/contains-duplicate-iii/solutions/824603/python-sortedlist-o-n-log-k-solution-explained/
 174.4
 241.2 (understand reg exp and operators)
 1140 (stone game II) 2.( the key here in Lee215's solution is to use lrucache in functiontools;a good tutorial on lru cache is:
@@ -138,8 +139,16 @@ problem list: https://leetcode.com/list/53js48ke/
 ***************binary search*********************
 Wei Chen's trick on binary search algo:
 
+we can use while l < r:
 # l = mid, r = mid -1 -> mid = l + (r-l+1)//2
 # l = mid + 1, r = mid -> mid = l + (r-l)//2
-# l = mid +1, r = mid -1 -> mid can be written in either case
+
+
+# l = mid +1, r = mid -1 -> mid can be written in either case; 
+but now preferrably  while l <= r because we want to hit the conditional
+if target == nums[mid]:
+return mid
+without the equal to in l<=r; we could make the final return condition messy.
+
 # l= mid, r = mid, then loop condition becomes while l < r - 1, after loop, check l and r separately.
 
