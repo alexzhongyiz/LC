@@ -124,6 +124,9 @@ Special Algo/Data Structure:
 a good explanation: https://www.youtube.com/watch?v=Oq2E2yGadnU&ab_channel=JAlgs; or this video: https://www.youtube.com/watch?v=I7RFycpqbDk&t=1124s
 its accompanying implementation in python:
 https://github.com/jakobkogler/Algorithm-DataStructures/blob/master/RangeQuery/SegmentTree.py
+Note: the algo provided by https://gist.github.com/Shaddyjr/5c4e81319229481cc1823fe660d04ff2 in the second video has some drawback, one of the problem is that 
+it has to be using a power of 2 for the segment tree. Otherwise when the originial array has size 10, there might be some problem. Use the implementation above instead.
+
 315: 0* (Such a smart way to use Seg/Fenw Tree)
 *************KMP****************************************
 https://leetcode.com/problems/shortest-palindrome/solution/
