@@ -120,10 +120,11 @@ https://leetcode.com/problems/single-number-ii/discuss/43295/Detailed-explanatio
 
 ================================================================================================================
 Special Algo/Data Structure:
-*******************Segment Tree**************************
+*******************Segment Tree/Fenwick Tree**************************
 a good explanation: https://www.youtube.com/watch?v=Oq2E2yGadnU&ab_channel=JAlgs; or this video: https://www.youtube.com/watch?v=I7RFycpqbDk&t=1124s
 its accompanying implementation in python:
 https://github.com/jakobkogler/Algorithm-DataStructures/blob/master/RangeQuery/SegmentTree.py
+315: 0* (Such a smart way to use Seg/Fenw Tree)
 *************KMP****************************************
 https://leetcode.com/problems/shortest-palindrome/solution/
 https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
