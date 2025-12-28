@@ -126,7 +126,7 @@ its accompanying implementation in python:
 https://github.com/jakobkogler/Algorithm-DataStructures/blob/master/RangeQuery/SegmentTree.py
 Note: the algo provided by https://gist.github.com/Shaddyjr/5c4e81319229481cc1823fe660d04ff2 in the second video has some drawback, one of the problem is that 
 it has to be using a power of 2 for the segment tree. Otherwise when the originial array has size 10, there might be some problem. Use the implementation above instead.
-
+tag: https://leetcode.com/problem-list/segment-tree/
 315: 0* (Such a smart way to use Seg/Fenw Tree)
 *************KMP****************************************
 https://leetcode.com/problems/shortest-palindrome/solution/
@@ -139,6 +139,11 @@ https://leetcode.com/problems/majority-element-ii/solution/
 
 *******************************Dijkstras algo***********
 problem list: https://leetcode.com/list/53js48ke/
+
+********************Digit DP*****************
+Explanation:https://codeforces.com/blog/entry/53960 and 
+code: https://github.com/flash7even/Programming-Contest/blob/master/Code%20Repository/Dynamic%20Programming/Digit%20DP/Digit-DP.cpp
+tag: https://leetcode.com/problem-list/2chw7ar7/
 
 ***************binary search*********************
 Wei Chen's trick on binary search algo:
