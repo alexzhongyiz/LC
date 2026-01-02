@@ -99,10 +99,14 @@ b.https://leetcode.com/problems/search-suggestions-system/discuss/508775/Python-
 472 2* Still need to use DFS: see https://leetcode.com/problems/concatenated-words/discuss/765634/Python-Trie-solution-explained
 or the following dfs with memo solution: https://leetcode.com/problems/concatenated-words/discuss/159348/Python-DFS-readable-solution
 
+
+
 **************Union Find*****************************************
 130: 4 could also try bfs/dfs
 720: 2* The unionfind parents doens't have to be elements themselves; 
 can be indices: https://leetcode.com/problems/accounts-merge/discuss/1084738/Python-The-clean-Union-Find-solution-you-are-looking-for
+
+
 
 *******************Bit Operations**********************************
 look at ith binary digit: n>>i & 1
@@ -118,20 +122,29 @@ https://leetcode.com/problems/single-number-ii/discuss/43295/Detailed-explanatio
 
 
 
-================================================================================================================
+==============================================================================================================================================================
 Special Algo/Data Structure:
+
+
 *******************Segment Tree/Fenwick Tree**************************
 a good explanation: https://www.youtube.com/watch?v=Oq2E2yGadnU&ab_channel=JAlgs; or this video: https://www.youtube.com/watch?v=I7RFycpqbDk&t=1124s
+the clearest coding is here:https: //leetcode.com/problems/range-sum-query-mutable/solutions/1280869/python-all-possible-methods-explained-wi-16s2
+Note, we don't have to define Node, but rather, just a dictionary with keys "left","right" and "val".
 its accompanying implementation in python:
 https://github.com/jakobkogler/Algorithm-DataStructures/blob/master/RangeQuery/SegmentTree.py
 Note: the algo provided by https://gist.github.com/Shaddyjr/5c4e81319229481cc1823fe660d04ff2 in the second video has some drawback, one of the problem is that 
-it has to be using a power of 2 for the segment tree. Otherwise when the originial array has size 10, there might be some problem. Use the implementation above instead.
+it has to be using a power of 2 for the segment tree. Otherwise when the originial array has size 10, there might be some problem. 
+
 tag: https://leetcode.com/problem-list/segment-tree/
 315: 0* (Such a smart way to use Seg/Fenw Tree)
+
+
+
 *************KMP****************************************
 https://leetcode.com/problems/shortest-palindrome/solution/
 https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
 https://leetcode.com/problems/shortest-palindrome/discuss/60113/clean-kmp-solution-with-super-detailed-explanation
+
 
 *********************Boyer-Moore Voting Algorithm**************
 https://leetcode.com/problems/majority-element-ii/solution/
@@ -143,6 +156,7 @@ problem list: https://leetcode.com/list/53js48ke/
 ********************Digit DP*****************
 Explanation:https://codeforces.com/blog/entry/53960 and 
 code: https://github.com/flash7even/Programming-Contest/blob/master/Code%20Repository/Dynamic%20Programming/Digit%20DP/Digit-DP.cpp
+https://leetcode.com/problems/number-of-balanced-integers-in-a-range/solutions/7445215/digit-dp-detailed-explanation-beats-100-fut2x/
 tag: https://leetcode.com/problem-list/2chw7ar7/
 
 ***************binary search*********************
