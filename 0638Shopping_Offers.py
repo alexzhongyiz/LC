@@ -1,4 +1,6 @@
 import functools
+# this is not the best idea. DFS with memory as explained in https://leetcode.com/problems/shopping-offers/solutions/6727813/conquer-shopping-offers-with-memoized-df-aebl/?envType=problem-list-v2&envId=50vif4uc
+# or https://leetcode.com/problems/shopping-offers/solutions/7423061/python3-dynamic-programming-recursive-me-aiet/?envType=problem-list-v2&envId=50vif4uc
 def shoppingOffers(price, special, needs):
     n = len(price)
     maxprice = sum([price[i]*needs[i] for i in range(n)])
@@ -23,4 +25,5 @@ def shoppingOffers(price, special, needs):
 
     
 print(shoppingOffers([2,5],[[3,0,5],[1,2,10]],[3,2]))
+
 print(shoppingOffers([2,3,4],[[1,1,0,4],[2,2,1,9]],[1,2,1]))
